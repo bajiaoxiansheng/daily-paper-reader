@@ -74,6 +74,9 @@ class ConferenceSidebarTest(unittest.TestCase):
             self.assertIn("result:", md_text)
             self.assertIn("conclusion:", md_text)
             self.assertIn("## Original Abstract", md_text)
+            self.assertIn("## 论文简要总结（会议检索）", md_text)
+            self.assertIn("### 1. 检索相关性", md_text)
+            self.assertIn("### 4. 来源与原文", md_text)
             self.assertNotIn("# A Conference Paper", md_text)
             self.assertNotIn("## 命中理由", md_text)
 

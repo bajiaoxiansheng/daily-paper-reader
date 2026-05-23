@@ -136,6 +136,43 @@ def build_glance_fields(paper: Dict[str, Any], ranked_item: Dict[str, Any]) -> D
     }
 
 
+def build_conference_summary_lines(
+    paper: Dict[str, Any],
+    ranked_item: Dict[str, Any],
+    link: str,
+) -> List[str]:
+    evidence = get_evidence(ranked_item)
+    tldr = get_tldr(ranked_item)
+    query_text = norm_text(ranked_item.get("matched_query_text"))
+    abstract = norm_text(paper.get("abstract"))
+    source = norm_text(paper.get("source"))
+
+    lines = [
+        "---",
+        "",
+        "## 论文简要总结（会议检索）",
+        "",
+        "### 1. 检索相关性",
+        ensure_sentence(evidence or "该论文由会议检索链路召回，具体相关性可结合检索需求和原文进一步判断"),
+        "",
+        "### 2. 核心内容",
+        ensure_sentence(tldr or first_sentence(abstract) or "核心内容请参考摘要与 OpenReview 原文"),
+        "",
+        "### 3. 对应检索需求",
+        ensure_sentence(query_text or "当前结果未记录具体命中的检索需求"),
+        "",
+        "### 4. 来源与原文",
+    ]
+    if source:
+        lines.append(f"- Source：{source}")
+    if link:
+        lines.append(f"- OpenReview：[{link}]({link})")
+    if not source and not link:
+        lines.append("- 来源信息未记录。")
+    lines.append("")
+    return lines
+
+
 def load_json(path: Path) -> Dict[str, Any]:
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
@@ -284,6 +321,7 @@ def build_conference_markdown(
     lines.append("## Original Abstract")
     lines.append(abstract)
     lines.append("")
+    lines.extend(build_conference_summary_lines(paper, ranked_item, link))
     return "\n".join(lines)
 
 
