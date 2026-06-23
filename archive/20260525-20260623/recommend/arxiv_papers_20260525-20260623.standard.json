@@ -1,0 +1,205 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T13:14:13.067185+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2605.31277v1",
+      "source": "arxiv",
+      "title": "GETA: Generalized Encrypted Traffic Analysis",
+      "abstract": "Traditional traffic analysis is being fundamentally challenged by the rapid adoption of encryption, tunnelling, and privacy-preserving protocols, which increasingly obscure packet payloads and limit the usefulness of Deep Packet Inspection (DPI). Although machine learning has advanced encrypted traffic analysis, existing approaches often remain tied to protocol-specific header features, depend on large labelled datasets, and degrade when deployed across heterogeneous network environments. We present GETA, a protocol-agnostic framework for encrypted traffic analysis that models network flows as multivariate time series using only traffic metadata, thereby avoiding reliance on packet payloads or header semantics. GETA combines meta-learning, embedding refinement, and self-attention to support few-shot adaptation to previously unseen domains with minimal labelled data. Across nine public datasets spanning application identification, VPN traffic classification, IoT device fingerprinting, and attack detection, GETA consistently outperforms state-of-the-art baselines. These results show that GETA offers a practical and generalisable foundation for robust traffic analysis in modern encrypted networks.",
+      "authors": [
+        "Ransika Gunasekara",
+        "Rahat Masood",
+        "Salil Kanhere"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.LG"
+      ],
+      "published": "2026-05-29T13:09:35+00:00",
+      "link": "https://arxiv.org/pdf/2605.31277v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "protocol-agnostic encrypted traffic analysis using metadata and meta-learning",
+      "llm_evidence_cn": "基于元数据的协议无关加密流量分析方法",
+      "llm_evidence": "基于元数据的协议无关加密流量分析方法",
+      "canonical_evidence": "基于元数据的协议无关加密流量分析方法",
+      "llm_tldr_en": "GETA is a protocol-agnostic framework for encrypted traffic analysis that models flows as multivariate time series, combining meta-learning and self-attention, achieving robust classification without payload.",
+      "llm_tldr_cn": "现有加密流量分析方法依赖特定协议头部特征和大规模标注数据，在异构环境中性能下降。本文提出GETA，一种协议无关的框架，将网络流建模为多变量时间序列，仅使用流量元数据，结合元学习和自注意力机制，无需有效载荷。实验表明GETA在多种加密流量分类任务上达到高准确率，具有良好的泛化能力。该方法为加密流量分析提供了通用且可迁移的解决方案。",
+      "llm_tldr": "现有加密流量分析方法依赖特定协议头部特征和大规模标注数据，在异构环境中性能下降。本文提出GETA，一种协议无关的框架，将网络流建模为多变量时间序列，仅使用流量元数据，结合元学习和自注意力机制，无需有效载荷。实验表明GETA在多种加密流量分类任务上达到高准确率，具有良好的泛化能力。该方法为加密流量分析提供了通用且可迁移的解决方案。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "methods for classifying encrypted network traffic",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.04517v1",
+      "source": "arxiv",
+      "title": "Treat Traffic Like Trees: A Semantic-Preserving Hierarchical Graph-Based Expert Framework for Encrypted Traffic Analysis",
+      "abstract": "Graph-based deep learning methods have been widely employed in encrypted traffic analysis to exploit latent correlations across different granularities. However, while complex preprocessing pipelines and sophisticated model structures often achieve strong performance, they may obscure inherent protocol semantics during representation learning. Moreover, the hierarchical structure of protocol layers and their corresponding fields, defined by protocol specifications and routinely utilized in manual traffic analysis, remains underexplored in existing learning frameworks. In this paper, we propose Protocol Tree Graph Attention with Mixture of Experts (PTGAMoE), a semantic-preserving hierarchical graph-based expert framework for encrypted traffic analysis. The field-based graph construction and expert committee design enable PTGAMoE to quantify the model's preferences for specific fields and protocols. Extensive experimental results on representative benchmark datasets under strict no-data-leakage settings demonstrate that PTGAMoE significantly outperforms state-of-the-art (SOTA) models. Furthermore, the semantic-preserving design provides interpretable insights into protocol-level feature importance and expert-level contributions, reflecting the model's decision-making logic in encrypted traffic classification tasks.",
+      "authors": [
+        "Yuantu Luo",
+        "Jun Tao",
+        "Linxiao Yu",
+        "Guang Cheng"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-06-03T06:52:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.04517v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes graph-based deep learning framework for encrypted traffic analysis",
+      "llm_evidence_cn": "提出基于图的深度学习框架用于加密流量分析",
+      "llm_evidence": "提出基于图的深度学习框架用于加密流量分析",
+      "canonical_evidence": "提出基于图的深度学习框架用于加密流量分析",
+      "llm_tldr_en": "Proposes PTGAMoE, a semantic-preserving hierarchical graph-based expert framework that leverages protocol tree structure to improve encrypted traffic analysis, outperforming existing methods.",
+      "llm_tldr_cn": "针对现有图深度学习在加密流量分析中忽略协议层次语义的问题，本文提出PTGAMoE框架，通过构建协议树图注意力网络并集成混合专家机制，保留协议层次语义进行表示学习。实验表明该方法在加密流量分类任务上显著优于现有方法，为利用协议结构进行流量分析提供了新思路。",
+      "llm_tldr": "针对现有图深度学习在加密流量分析中忽略协议层次语义的问题，本文提出PTGAMoE框架，通过构建协议树图注意力网络并集成混合专家机制，保留协议层次语义进行表示学习。实验表明该方法在加密流量分类任务上显著优于现有方法，为利用协议结构进行流量分析提供了新思路。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "deep learning approaches for encrypted traffic classification",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.31337v1",
+      "source": "arxiv",
+      "title": "When Entropy Is Not Enough: Multi-Modal Classification of Encrypted and Compressed Data Fragments",
+      "abstract": "Reliable identification of encrypted data fragments is essential in cybersecurity, with applications to ransomware detection, digital forensics, and large-scale data analysis. Distinguishing encrypted from compressed fragments is particularly challenging, as short fragments lack structural data and exhibit low statistical redundancy. Traditional statistical methods based on byte-level distributions show limited effectiveness on this task. Recent machine learning approaches improve performance by learning subtle patterns from raw bytes, but predominantly rely on single-modal representations, implicitly assuming that a single view of the data is sufficient for accurate classification. This paper shows that this assumption becomes a fundamental limitation in low-information settings, when only small fragments of data are available (512--2048 Bytes). We propose Triumvir, a multi-modal, uncertainty-aware ensemble architecture that integrates statistical, sequential, and spatial representations of raw byte fragments. Extensive experimental analysis demonstrates that Triumvir consistently outperforms state-of-the-art methods with gains of up to +4.5pp in binary and +6.4pp in multiclass classification. Ablation studies confirm that combining modalities is critical, yielding improvements of up to +5pp over partial configurations.",
+      "authors": [
+        "Fabio De Gaspari",
+        "Dorjan Hitaj",
+        "Samuele Salaris",
+        "Luigi V. Mancini"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-05-29T14:18:13+00:00",
+      "link": "https://arxiv.org/pdf/2605.31337v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-modal classification of encrypted vs compressed data fragments",
+      "llm_evidence_cn": "加密与压缩数据片段的多模态分类",
+      "llm_evidence": "加密与压缩数据片段的多模态分类",
+      "canonical_evidence": "加密与压缩数据片段的多模态分类",
+      "llm_tldr_en": "Proposes a multi-modal machine learning approach to distinguish encrypted from compressed short fragments, overcoming limitations of single-modal byte-based methods.",
+      "llm_tldr_cn": "短片段加密数据的识别在网络安全中至关重要，但传统单模态方法难以区分加密与压缩。本文提出多模态分类框架，结合字节分布与结构特征，提升短片段分类精度。实验验证了多模态表示的有效性，显著优于单模态方法，为加密数据识别提供了新思路。",
+      "llm_tldr": "短片段加密数据的识别在网络安全中至关重要，但传统单模态方法难以区分加密与压缩。本文提出多模态分类框架，结合字节分布与结构特征，提升短片段分类精度。实验验证了多模态表示的有效性，显著优于单模态方法，为加密数据识别提供了新思路。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "methods for classifying encrypted network traffic",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00155v1",
+      "source": "arxiv",
+      "title": "A Protocol-Language Model for Network Intrusion (Without Deep Packet Inspection)",
+      "abstract": "Modern network intrusion detection systems (NIDS) are caught in a structural contradiction: the protocols carrying the highest threat intelligence are precisely those encrypted under TLS 1.3 and QUIC, where payload inspection yields nothing. We ask a simpler question -- what if the attack signature is not in the bytes, but in the rhythm? -- and answer it by treating network flows as a language whose grammar is written entirely in L3/L4 packet metadata: length, inter-arrival time, TTL, TCP flags, and hashed port numbers. We present PLM-NIDS, which proves three claims in sequence. (1) The grammar exists and is learnable: a RWKV-4 state-space model trained on 344,232 unlabelled Monday flows achieves a causal LM validation loss of 0.204, demonstrating that benign traffic has predictable, statistically consistent structure. (2) Attacks violate this grammar: the per-flow perplexity score cleanly separates benign from attack flows with PR-AUC = 0.93 using zero attack labels at training time. (3) This separation is architecturally nontrivial: an LSTM trained on identical token sequences degenerates to a majority-class predictor (ROC-AUC approximately 0.50, F1 = 0.91 by always predicting \"attack\"), proving that RWKV's causal pre-training provides an inductive bias unavailable to direct classifiers. Supervised fine-tuning further raises PR-AUC to 0.94 and ROC-AUC to 0.75, with a precision of 97.7% at the calibrated operating threshold. The RWKV backbone's O(T) recurrent inference enables per-packet streaming without flow buffering, making PLM-NIDS operationally viable at line rate. Because it reads only IP/TCP/UDP headers, it is inherently encryption-agnostic: TLS 1.3, QUIC, and future encrypted protocols are handled transparently.",
+      "authors": [
+        "Vivek Kumar Sharma"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-05-29T07:03:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.00155v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses L3/L4 metadata (length, inter-arrival time) to model encrypted flows",
+      "llm_evidence_cn": "使用网络流元数据（长度、到达间隔）对加密流量进行建模",
+      "llm_evidence": "使用网络流元数据（长度、到达间隔）对加密流量进行建模",
+      "canonical_evidence": "使用网络流元数据（长度、到达间隔）对加密流量进行建模",
+      "llm_tldr_en": "Proposes PLM-NIDS, a protocol-language model that treats encrypted network flows as language using only packet metadata, enabling intrusion detection without payload inspection.",
+      "llm_tldr_cn": "针对加密流量（如TLS1.3/QUIC）无法进行深度包检测的问题，提出PLM-NIDS，将网络流视为一种语言，仅使用L3/L4元数据（长度、到达间隔、TTL等）构建序列模型。使用RWKV-4状态空间模型在无标签数据上训练，验证了加密流中可学习的语法结构，为加密流量分类提供新的特征提取思路。",
+      "llm_tldr": "针对加密流量（如TLS1.3/QUIC）无法进行深度包检测的问题，提出PLM-NIDS，将网络流视为一种语言，仅使用L3/L4元数据（长度、到达间隔、TTL等）构建序列模型。使用RWKV-4状态空间模型在无标签数据上训练，验证了加密流中可学习的语法结构，为加密流量分类提供新的特征提取思路。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "network flow feature extraction for encryption detection",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15221v1",
+      "source": "arxiv",
+      "title": "Robust and Precise Application Fingerprinting on 5G Physical Uplink Channel",
+      "abstract": "Air fingerprinting infers application activity by sniffing metadata from cellular control channels. 5G encrypts these channels, breaking the attack chain that prior attacks depend on. This paper reveals a physical-layer side channel that bypasses encryption: under the link adaptation mandated by the cellular communication standard, the uplink Modulation and Coding Scheme (MCS) remains stable, so the number of Physical Resource Blocks (PRBs) occupied by a transmission accurately reflects the IP packet length. Combined with the uplink control channel that carries downlink information, an attacker can reconstruct a bidirectional traffic profile. This bidirectional information recovery can be achieved simply by observing the uplink spectrum, without decoding any channel. Building on this side channel, we design Crosshair, a passive three-step attack. First, a blind extraction stage recovers the uplink physical channel occupancy from raw IQ samples via energy detection, reconstructing bidirectional traffic from uplink spectrum. Second, we design a data augmentation method that synthesizes spectral profiles across diverse channel conditions, eliminating the need for prior knowledge of the communication environment. Third, cross-modal alignment embeds the spectral and IP domains into a shared space, enabling new applications to be enrolled from a collected IP trace alone. Extensive experiments on a 5G NR testbed demonstrate the robustness and precision of Crosshair: it outperforms the State-of-the-Art (SOTA) physical layer fingerprinting method in application recognition accuracy, and maintains high accuracy in cross-MCS scenarios.",
+      "authors": [
+        "Yu Li",
+        "Liqi Zhuang",
+        "Dong Wei",
+        "Jiwen Luo",
+        "Hang Zhang",
+        "Meng Zhang",
+        "Xiaona Li",
+        "Weiqing Huang"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-13T09:36:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.15221v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "application fingerprinting on 5G encrypted channels via physical-layer side channel",
+      "llm_evidence_cn": "通过物理层侧信道对5G加密信道进行应用指纹识别",
+      "llm_evidence": "通过物理层侧信道对5G加密信道进行应用指纹识别",
+      "canonical_evidence": "通过物理层侧信道对5G加密信道进行应用指纹识别",
+      "llm_tldr_en": "Exploits a physical-layer side channel in 5G to bypass encryption and reconstruct traffic profiles for application fingerprinting, using only uplink spectrum observation.",
+      "llm_tldr_cn": "5G加密控制信道打破了传统的空中指纹攻击链。本文发现物理层侧信道：通过上行链路MCS和PRB数量可以准确反映IP包长度，从而重构双向流量特征。攻击者仅需观测上行频谱即可识别应用活动，为加密流量的指纹识别提供了新途径。",
+      "llm_tldr": "5G加密控制信道打破了传统的空中指纹攻击链。本文发现物理层侧信道：通过上行链路MCS和PRB数量可以准确反映IP包长度，从而重构双向流量特征。攻击者仅需观测上行频谱即可识别应用活动，为加密流量的指纹识别提供了新途径。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "traffic fingerprinting methods for encrypted streams",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}
