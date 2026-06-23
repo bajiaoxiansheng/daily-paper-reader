@@ -6,35 +6,19 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-25 ~ 2026-06-23
-- 运行时间：2026-06-23 13:15:34 UTC
+- 最新运行日期：2026-06-23
+- 运行时间：2026-06-23 22:07:07 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：5
+- 本次总论文数：0
+- 精读区：0
 - 速读区：0
 
 ### 今日简报（AI）
-今日精读2篇加密流量分析论文，均获9.0高分。
-两篇分别提出广义框架GETA和语义保持分层图框架，值得重点关注。
-建议读者从图表示与专家系统结合的角度切入加密流量分析。
-- 详情：[/20260525-20260623/README](/20260525-20260623/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202606/23/README](/202606/23/README)
 
 ### 精读区论文标签
-1. [GETA: Generalized Encrypted Traffic Analysis](/20260525-20260623/2605.31277v1-geta-generalized-encrypted-traffic-analysis)  
-   标签：评分：9.0/10、query:crypto-class
-   evidence：基于元数据的协议无关加密流量分析方法
-2. [Treat Traffic Like Trees: A Semantic-Preserving Hierarchical Graph-Based Expert Framework for Encrypted Traffic Analysis](/20260525-20260623/2606.04517v1-treat-traffic-like-trees-a-semantic-preserving-hierarchical-graph-based-expert-framework-for-encrypted-traffic-analysis)  
-   标签：评分：9.0/10、query:crypto-class
-   evidence：提出基于图的深度学习框架用于加密流量分析
-3. [When Entropy Is Not Enough: Multi-Modal Classification of Encrypted and Compressed Data Fragments](/20260525-20260623/2605.31337v1-when-entropy-is-not-enough-multi-modal-classification-of-encrypted-and-compressed-data-fragments)  
-   标签：评分：8.0/10、query:crypto-class
-   evidence：加密与压缩数据片段的多模态分类
-4. [A Protocol-Language Model for Network Intrusion (Without Deep Packet Inspection)](/20260525-20260623/2606.00155v1-a-protocol-language-model-for-network-intrusion-without-deep-packet-inspection)  
-   标签：评分：8.0/10、query:crypto-class
-   evidence：使用网络流元数据（长度、到达间隔）对加密流量进行建模
-5. [Robust and Precise Application Fingerprinting on 5G Physical Uplink Channel](/20260525-20260623/2606.15221v1-robust-and-precise-application-fingerprinting-on-5g-physical-uplink-channel)  
-   标签：评分：8.0/10、query:crypto-class
-   evidence：通过物理层侧信道对5G加密信道进行应用指纹识别
+- 本次无精读推荐。
 
 ### 速读区论文标签
 - 本次无速读推荐。
