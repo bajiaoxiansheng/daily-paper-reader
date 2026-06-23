@@ -1,0 +1,93 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T12:25:36.807043+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.17462v1",
+      "source": "arxiv",
+      "title": "ResAware: Cross-Environment Website Fingerprinting via Resource-Privileged Distillation",
+      "abstract": "While Website Fingerprinting (WF) attacks achieve high accuracy in controlled laboratory settings, they often degrade substantially in real-world environments due to spatio-temporal drift, browser heterogeneity, proxy obfuscation and etc. This limitation stems from their sole reliance on low-level traffic features that are noisy and highly sensitive to environmental perturbations. To address this problem, we propose \\textbf{ResAware}, a cross-environment resource-aware distillation framework under a \\textit{training-rich/inference-poor} asymmetric setting. Specifically, ResAware trains a teacher model on resource-level features, and then distills the resulting privileged knowledge into a student model through heterogeneous knowledge distillation. At deployment time, the student model performs inference using only encrypted traffic, incurring zero additional cost. We evaluate ResAware on a large-scale dataset collected over five months from six globally distributed vantage points, comprising more than $160{,}000$ paired samples. The results show that ResAware significantly enhances the cross-environment robustness of diverse WF baselines. Under a 150-day temporal drift, for example, ResAware improves the F1-score of Var-CNN from $72.77\\%$ to $81.49\\%$ and the open-world $TPR@1\\%FPR$ from $22.40\\%$ to $27.20\\%$. Our results demonstrate that resource-level supervision improves WF robustness without expanding online observation capabilities.",
+      "authors": [
+        "Chongru Fan",
+        "Wei Wang",
+        "Wentao Huang",
+        "Zhenquan Ding",
+        "Jinqiao Shi",
+        "Lei Cui",
+        "Zhiyu Hao",
+        "Xiaochun Yun"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.NI"
+      ],
+      "published": "2026-06-16T03:24:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.17462v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "traffic fingerprinting method for encrypted streams; uses resource-level features",
+      "llm_evidence_cn": "针对加密流的流量指纹方法，利用资源级特征",
+      "llm_evidence": "针对加密流的流量指纹方法，利用资源级特征",
+      "canonical_evidence": "针对加密流的流量指纹方法，利用资源级特征",
+      "llm_tldr_en": "ResAware proposes a resource-aware distillation framework to improve website fingerprinting robustness across environments, using teacher-student knowledge transfer.",
+      "llm_tldr_cn": "现有网站指纹攻击在真实环境中因低层流量特征易受环境扰动而性能大幅下降。为此，本文提出ResAware，一种基于资源特权蒸馏的跨环境框架，训练教师模型学习资源级特征，通过异构知识迁移将鲁棒知识教给学生模型。实验表明该方法在多种环境漂移下显著优于基线，为加密流量指纹识别提供了实用的跨域解决方案。",
+      "llm_tldr": "现有网站指纹攻击在真实环境中因低层流量特征易受环境扰动而性能大幅下降。为此，本文提出ResAware，一种基于资源特权蒸馏的跨环境框架，训练教师模型学习资源级特征，通过异构知识迁移将鲁棒知识教给学生模型。实验表明该方法在多种环境漂移下显著优于基线，为加密流量指纹识别提供了实用的跨域解决方案。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "traffic fingerprinting methods for encrypted streams",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17746v1",
+      "source": "arxiv",
+      "title": "FlowCLIP: Contrastive Pretraining Using Domain Names for Encrypted Traffic Classification",
+      "abstract": "Network traffic classification enables website fingerprinting, intrusion detection, and Quality of Service management. However, developing methods that capture stable and generalizable traffic patterns under realistic deployment conditions remains challenging. We introduce FlowCLIP, a contrastive pretraining framework for domain name prediction from encrypted traffic using only side-channel features: packet inter-arrival times, packet sizes, and packet directions. FlowCLIP uses raw domain names as textual supervision by aligning traffic flow representations with domain name representations through a CLIP-style contrastive objective. The pretrained traffic encoder is then frozen and evaluated through linear probing on canonicalized domain name labels. We evaluate FlowCLIP on a large-scale QUIC traffic dataset using a time-based protocol, where models are trained on Week 1 traffic and evaluated on traffic from Weeks 2-4. FlowCLIP outperforms competitive machine learning baselines across later evaluation weeks, suggesting that raw domain names provide a textual supervision signal for learning transferable encrypted traffic representations.",
+      "authors": [
+        "Eun Hun Choi"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-16T10:06:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.17746v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "encrypted traffic classification using contrastive pretraining",
+      "llm_evidence_cn": "使用对比预训练进行加密流量分类",
+      "llm_evidence": "使用对比预训练进行加密流量分类",
+      "canonical_evidence": "使用对比预训练进行加密流量分类",
+      "llm_tldr_en": "FlowCLIP uses CLIP-style contrastive learning to align encrypted traffic flows with domain name representations using only side-channel features, enabling effective classification with frozen encoder.",
+      "llm_tldr_cn": "针对加密流量分类在真实部署中泛化性差的问题，FlowCLIP提出利用域名作为文本监督信号，通过对比学习对齐流量流与域名表示。仅需包间隔、大小和方向等侧信道特征，无需解密。预训练后的编码器冻结后通过线性探测即可分类，在多个任务上验证了有效性和泛化能力。该方法为加密流量分类提供了新的预训练范式。",
+      "llm_tldr": "针对加密流量分类在真实部署中泛化性差的问题，FlowCLIP提出利用域名作为文本监督信号，通过对比学习对齐流量流与域名表示。仅需包间隔、大小和方向等侧信道特征，无需解密。预训练后的编码器冻结后通过线性探测即可分类，在多个任务上验证了有效性和泛化能力。该方法为加密流量分类提供了新的预训练范式。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "methods for classifying encrypted network traffic",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}
