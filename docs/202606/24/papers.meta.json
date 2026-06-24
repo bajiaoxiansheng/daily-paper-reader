@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-24",
+  "date": "2026-06-24",
+  "generated_at": "2026-06-24T20:45:00",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/24/2606.24105v1-dohfuse-a-dual-branch-architecture-with-dmaglstm-for-website-fingerprinting-over-dns-over-https3",
+      "section": "deep",
+      "title_en": "DoHFuse: A Dual-Branch Architecture with DMAGLSTM for Website Fingerprinting over DNS over HTTPS/3",
+      "authors": "ZunDong Zhang, Yanan Cheng, Zhaoxin Zhang, Xueyang Huo, Changjiang Wu",
+      "date": "2026-06-23",
+      "pdf": "https://arxiv.org/pdf/2606.24105v1",
+      "score": "9.0",
+      "evidence": "加密DNS上的网站指纹识别",
+      "tldr": "随着IoT环境对隐私需求提升，DoH/3被广泛采用并应用填充策略，但其抵御网站指纹攻击的有效性尚待验证。本文收集了首个真实DoH/3流量数据集，并提出双分支框架DoHFuse，通过改进的DMAG-LSTM融合到达间隔时间序列与统计特征，捕捉突发模式。实验表明，在449类封闭世界下准确率达88.05%，开放世界AUPRC 0.975，F1 0.951，证明攻击仍有效。该工作揭示了填充机制不足以保护隐私，为加密DNS通信的隐私防护提供了重要基准和警示。",
+      "tags": "query:crypto-class",
+      "abstract_en": "As personal data privacy becomes increasingly critical in Internet of Things (IoT) environments, secure DNS protocols such as DNS over HTTPS (DoH) and DNS over TLS (DoT) have been widely adopted to protect device communications. However, without effective obfuscation, these protocols remain vulnerable to Website Fingerprinting (WF) attacks that can reveal user activity. With the ongoing deployment of DNS over HTTP/3 (DoH/3) in modern networked systems, padding strategies have been increasingly applied in practice. It is therefore essential to investigate whether DoH/3 can effectively mitigate WF attacks in realistic IoT and edge-network scenarios. To address this, we first collect and publicly release the first real-world benchmark dataset of DoH/3 traffic, generated from domain resolution processes in practical network environments. We further propose DoHFuse, a dual-branch learning framework that integrates inter-arrival time sequences and refined statistical features through an improved DMAG-LSTM, specifically designed to capture burst-aligned temporal patterns. Experimental results show that DoHFuse achieves an accuracy of 88.05% (precision 88.56, recall 87.96, F1 87.83) in a closed-world setting of 449 classes, and an AUPRC of 0.975 with an F1 score of 0.951 (precision 0.906, recall 1.0) in open-world detection. These findings demonstrate that DoH/3 traffic remains susceptible to WF attacks, suggesting that commonly deployed padding mechanisms alone are insufficient to ensure privacy protection in IoT-scale encrypted DNS communications.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

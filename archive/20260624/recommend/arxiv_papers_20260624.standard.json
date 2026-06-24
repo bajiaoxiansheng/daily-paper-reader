@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T20:43:15.337674+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.24105v1",
+      "source": "arxiv",
+      "title": "DoHFuse: A Dual-Branch Architecture with DMAGLSTM for Website Fingerprinting over DNS over HTTPS/3",
+      "abstract": "As personal data privacy becomes increasingly critical in Internet of Things (IoT) environments, secure DNS protocols such as DNS over HTTPS (DoH) and DNS over TLS (DoT) have been widely adopted to protect device communications. However, without effective obfuscation, these protocols remain vulnerable to Website Fingerprinting (WF) attacks that can reveal user activity. With the ongoing deployment of DNS over HTTP/3 (DoH/3) in modern networked systems, padding strategies have been increasingly applied in practice. It is therefore essential to investigate whether DoH/3 can effectively mitigate WF attacks in realistic IoT and edge-network scenarios. To address this, we first collect and publicly release the first real-world benchmark dataset of DoH/3 traffic, generated from domain resolution processes in practical network environments. We further propose DoHFuse, a dual-branch learning framework that integrates inter-arrival time sequences and refined statistical features through an improved DMAG-LSTM, specifically designed to capture burst-aligned temporal patterns. Experimental results show that DoHFuse achieves an accuracy of 88.05% (precision 88.56, recall 87.96, F1 87.83) in a closed-world setting of 449 classes, and an AUPRC of 0.975 with an F1 score of 0.951 (precision 0.906, recall 1.0) in open-world detection. These findings demonstrate that DoH/3 traffic remains susceptible to WF attacks, suggesting that commonly deployed padding mechanisms alone are insufficient to ensure privacy protection in IoT-scale encrypted DNS communications.",
+      "authors": [
+        "ZunDong Zhang",
+        "Yanan Cheng",
+        "Zhaoxin Zhang",
+        "Xueyang Huo",
+        "Changjiang Wu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-23T03:36:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.24105v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "website fingerprinting over encrypted DNS",
+      "llm_evidence_cn": "加密DNS上的网站指纹识别",
+      "llm_evidence": "加密DNS上的网站指纹识别",
+      "canonical_evidence": "加密DNS上的网站指纹识别",
+      "llm_tldr_en": "Proposes DoHFuse, a dual-branch DMAGLSTM architecture for website fingerprinting over DoH/3, achieving high accuracy in IoT and edge-network scenarios.",
+      "llm_tldr_cn": "该论文针对DoH/3加密DNS协议中的网站指纹攻击问题，提出了DoHFuse双分支架构，结合DMAGLSTM模型进行流量特征提取与分类。实验结果表明，在物联网和边缘网络场景下，该架构能够有效识别加密流量中的用户活动，首次发布了真实世界数据集，为加密流量分类提供了新方法。",
+      "llm_tldr": "该论文针对DoH/3加密DNS协议中的网站指纹攻击问题，提出了DoHFuse双分支架构，结合DMAGLSTM模型进行流量特征提取与分类。实验结果表明，在物联网和边缘网络场景下，该架构能够有效识别加密流量中的用户活动，首次发布了真实世界数据集，为加密流量分类提供了新方法。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "traffic fingerprinting methods for encrypted streams",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

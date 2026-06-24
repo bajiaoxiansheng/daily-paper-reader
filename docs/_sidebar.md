@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-24 <!--dpr-date:20260624-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/24/2606.24105v1-dohfuse-a-dual-branch-architecture-with-dmaglstm-for-website-fingerprinting-over-dns-over-https3" data-sidebar-item="{&quot;title&quot;: &quot;DoHFuse: A Dual-Branch Architecture with DMAGLSTM for Website Fingerprinting over DNS over HTTPS/3&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.24105v1-dohfuse-a-dual-branch-architecture-with-dmaglstm-for-website-fingerprinting-over-dns-over-https3&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;加密DNS上的网站指纹识别&quot;}">DoHFuse: A Dual-Branch Architecture with DMAGLSTM for Website Fingerprinting over DNS over HTTPS/3</a>
   * 2026-05-25 ~ 2026-06-23 <!--dpr-date:20260525-20260623-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/20260525-20260623/2605.31277v1-geta-generalized-encrypted-traffic-analysis" data-sidebar-item="{&quot;title&quot;: &quot;GETA: Generalized Encrypted Traffic Analysis&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2605.31277v1-geta-generalized-encrypted-traffic-analysis&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;基于元数据的协议无关加密流量分析方法&quot;}">GETA: Generalized Encrypted Traffic Analysis</a>
