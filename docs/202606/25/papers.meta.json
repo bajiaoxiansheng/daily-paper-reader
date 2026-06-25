@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-25",
+  "date": "2026-06-25",
+  "generated_at": "2026-06-25T22:13:11",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/25/2606.20864v1-synthetic-network-packet-generation-through-statistical-learning-and-genetic-algorithms",
+      "section": "quick",
+      "title_en": "Synthetic Network Packet Generation through Statistical Learning and Genetic Algorithms",
+      "authors": "Mayank Raj, Nathaniel D. Bastian, Lance Fiondella, Gokhan Kul",
+      "date": "2026-06-18",
+      "pdf": "https://arxiv.org/pdf/2606.20864v1",
+      "score": "7.0",
+      "evidence": "使用统计学习和遗传算法生成合成网络数据包，适用于入侵检测和流量分类",
+      "tldr": "现有IoT入侵检测数据集存在分布固定、类别极度不平衡的问题，且深度生成模型无法保证合成数据包的物理有效性。本文提出两种施加硬约束的合成方法：基于PCA与异常检测边界的统计学习方法，以及将数据包生成视为多目标优化的遗传算法。在ACI IoT 2023数据集上，统计方法达到1.20%平均异常率、约1091包/秒吞吐量；遗传算法达到0.62%异常率、约5.7包/秒，两者均成功将5样本的ARP欺骗类别放大200-1000倍。两种方法质量互补，为快速数据集增强与对抗鲁棒测试提供了选择依据。",
+      "tags": "query:crypto-class",
+      "abstract_en": "Developing robust intrusion detection systems (IDS) for IoT environments requires large, labeled datasets capturing realistic traffic distributions across both benign and malicious activity. Existing public datasets suffer from fixed activity distributions and extreme class imbalance, while deep generative models (GANs, VAEs) provide no mechanism to enforce that synthetic packets remain within physically valid feature ranges. This paper proposes and compares two constraint-enforcing approaches for synthetic IoT network packet generation: (i) a statistical learning method combining PCA-based latent space sampling with dual One-Class SVM (OCSVM) and Isolation Forest (IF) boundary enforcement, and (ii) a genetic algorithm (GA) method that treats packet generation as a multi-objective optimization problem with explicit fitness criteria for anomaly model acceptance and distributional fidelity. Both methods embed hard validity constraints -- dual anomaly-detection gating, feature-range clamping, and independent validation -- directly into the synthesis pipeline. Evaluation on the complete ACI IoT 2023 dataset (1,231,411 packets, 12 attack categories, class imbalance up to 175,805:1) demonstrates that both methods achieve PASS status across all categories under independently trained validators with a 30% anomaly rate threshold: the statistical method attains 1.20% average anomaly rate with ~1,091 packets/s throughput, while the GA attains 0.62% average anomaly rate with organic per-class variance (0.00%-2.50%) at ~5.7 packets/s. Both methods successfully amplify the 5-sample ARP Spoofing category by 200x to 1,000 validated packets. The ~190:1 throughput ratio between methods, combined with their complementary quality profiles, provides evidence-based selection criteria for deployment contexts ranging from rapid dataset augmentation to adversarial robustness testing.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/25/2606.22581v1-from-cve-to-cwe-syscall-based-hids-generalisation",
+      "section": "quick",
+      "title_en": "From CVE to CWE: Syscall-Based HIDS Generalisation",
+      "authors": "Alexander V. Kozachok, Stanislav G. Vyugov, Shamil G. Magomedov",
+      "date": "2026-06-21",
+      "pdf": "https://arxiv.org/pdf/2606.22581v1",
+      "score": "6.0",
+      "evidence": "基于系统调用特征向量和孤立森林的异常检测方法，可迁移至加密流量机器学习",
+      "tldr": "针对基于系统调用痕迹的主机入侵检测系统通常针对单个CVE实例训练，但实际需识别同类型弱点的新利用。本文利用LID-DS-2021数据集，将CVEs按CWE（CWE-307、CWE-89、CWE-434）分组，提取66维Peng-Guo特征，训练Isolation Forest和SGD One-Class SVM，校准固定FPR。实验显示CWE-307检测器F1达0.6976，而CWE-89和CWE-434低于0.21；跨CVE迁移方向依赖强，取决于源正常轮廓广度而非CWE标签。结果表明CWE级泛化对部分弱点族可行，且校准FPR是诚实报告的方法论前提。",
+      "tags": "query:crypto-class",
+      "abstract_en": "Host intrusion detection systems (HIDS) based on system-call traces are typically trained and evaluated against individual Common Vulnerabilities and Exposures (CVE) instances. In operational settings, however, defenders need to recognise new exploits of an already known type of weakness. We empirically examine whether a one-class anomaly detector trained on the normal behaviour of a set of CVEs that share a Common Weakness Enumeration (CWE) class generalises to a different, unseen CVE inside the same class. Using six scenarios drawn from LID-DS-2021 and grouped into three CWE families (CWE-307 broken authentication, CWE-89 SQL injection, CWE-434 unrestricted file upload), we extract a 66-dimensional Peng-Guo-style feature vector per sliding window and train Isolation Forest and SGD One-Class SVM detectors with normal-only thresholds calibrated to fixed target false positive rates. We define and answer four research questions covering self-detection, asymmetric cross-CVE transfer, the value of a combined CWE-level normal profile, and the effect of feature filtering on transferability. The combined CWE-307 detector reaches F1 = 0.6976 at calibration target FPR = 0.05 (precision = 0.8994, recall = 0.5698), whereas CWE-89 and CWE-434 collapse to F1 <= 0.21 under the same protocol. Cross-CVE transfer turns out to be strongly direction-dependent and dominated by the breadth of the source normal profile rather than by the CWE label. We conclude that CWE-level generalisation in HIDS is empirically attainable for some but not all weakness families with current syscall features, and we argue that calibrated FPR is a methodological prerequisite for honest reporting in this setting.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/25/2606.22717v1-one-prompt-censorship-evasion-via-generative-diffusion-models",
+      "section": "quick",
+      "title_en": "One-Prompt Censorship Evasion via Generative Diffusion Models",
+      "authors": "Shiyi Ling, Yuhang Gan, Chen Qian",
+      "date": "2026-06-21",
+      "pdf": "https://arxiv.org/pdf/2606.22717v1",
+      "score": "6.0",
+      "evidence": "基于深度学习的流量分析用于审查规避，涉及加密流量处理",
+      "tldr": "针对审查方从规则过滤升级到深度学习流量分析，现有规避工具鲁棒性不足且需复杂配置。本文提出将审查规避视为语义图像编辑任务，通过生成扩散模型FlowPaint，用单条自然语言指令自动将审查流量重塑为良性模式。实验表明FlowPaint在工业级规则中间盒和学习分类器上均优于现有方法。该工作首次将大型扩散模型知识用于网络流量规避，大幅提升易用性与抗多样性。",
+      "tags": "query:crypto-class",
+      "abstract_en": "The escalating arms race between Internet censorship and evasion has driven censors to evolve from static rule-based filtering to sophisticated deep learning-based traffic analysis. While recent automated evasion tools have attempted to counter this by leveraging stochastic search and programmable heuristics, they continue to suffer from insufficient evasion robustness across diverse censorship modalities and poor usability due to complex, mechanism-specific configurations that require manual fitness tuning or domain-specific languages. In this paper, we propose a paradigm shift that reframes censorship evasion as a semantic image-to-image editing task, allowing users to execute it with a single prompt. We introduce FlowPaint, a novel generative framework that leverages the \"world knowledge\" of large diffusion models to automatically reshape censored traffic into benign patterns. FlowPaint utilizes an instruction-tuned diffusion architecture to perform semantic editing on network flows. Evaluations against both industrial-grade rule-based middleboxes and learning-based classifiers demonstrate that FlowPaint outperforms existing censorship evasion baselines, enabling users to counter diverse censorship paradigms solely by varying natural language instructions",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/25/2606.23236v1-a-hybrid-intrusion-detection-system-for-electric-vehicle-charging-infrastructure",
+      "section": "quick",
+      "title_en": "A Hybrid Intrusion Detection System for Electric Vehicle Charging Infrastructure",
+      "authors": "Charukeshi Joglekar, Chijioke Eze, Danni Xiang, Antonello Monti",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23236v1",
+      "score": "6.0",
+      "evidence": "针对电动汽车充电基础设施的混合入侵检测系统，涉及网络流量特征提取",
+      "tldr": "电动汽车充电站（EVCS）的数字化管理增加了网络攻击面，现有入侵检测系统（IDS）难以同时覆盖网络和物理层。本文提出混合IDS，结合网络型（NIDS）与主机型（HIDS）双层面检测，利用CICEVSE2024数据集对虚假数据注入、拒绝服务等攻击进行多分类。实验表明，NIDS准确率达99.99%，HIDS达83.47%，双层面检测显著优于单源方法，提升了充电基础设施的安全性。",
+      "tags": "query:crypto-class",
+      "abstract_en": "The integration of Electric Vehicle Charging Stations (EVCSs) into the smart grid necessitates sophisticated digital infrastructure for their management and coordination, which expands the attack surface and makes both the power grid and EVCSs vulnerable to cyberattacks. This research addresses critical gaps in existing EVCS Intrusion Detection Systems (IDS) by proposing a hybrid IDS that integrates attack detection on both the cyber and physical layer of the EVCS ecosystem. The proposed hybrid IDS utilizes a dual-layer integration method, which combines network-based IDS (NIDS) and host-based IDS (HIDS). This approach facilitates for comprehensive monitoring of both network traffic through the NIDS and host-level activities via the HIDS, effectively addressing the unique challenges posed by the interconnected nature of EVCS ecosystems. Utilizing the recent CICEVSE2024 dataset, the IDS presented in this work performs multiclass classification across various attack types, including False Data Injection Attacks (FDIAs), reconnaissance, denial of service, backdoor, and cryptojacking attacks. Experimental results demonstrate that our approach achieves excellent detection accuracy, with the NIDS component reaching 99.99\\% accuracy for network-based attacks and the HIDS component achieving 83.47\\% accuracy on FDIA, cryptojacking, backdoor, all DoS, all Recon except Slowloris Scan attacks. This dual-layer detection significantly outperforms single-source detection approaches previously presented in literature.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

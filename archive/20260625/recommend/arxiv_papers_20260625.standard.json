@@ -1,0 +1,171 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T22:11:11.201456+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.20864v1",
+      "source": "arxiv",
+      "title": "Synthetic Network Packet Generation through Statistical Learning and Genetic Algorithms",
+      "abstract": "Developing robust intrusion detection systems (IDS) for IoT environments requires large, labeled datasets capturing realistic traffic distributions across both benign and malicious activity. Existing public datasets suffer from fixed activity distributions and extreme class imbalance, while deep generative models (GANs, VAEs) provide no mechanism to enforce that synthetic packets remain within physically valid feature ranges. This paper proposes and compares two constraint-enforcing approaches for synthetic IoT network packet generation: (i) a statistical learning method combining PCA-based latent space sampling with dual One-Class SVM (OCSVM) and Isolation Forest (IF) boundary enforcement, and (ii) a genetic algorithm (GA) method that treats packet generation as a multi-objective optimization problem with explicit fitness criteria for anomaly model acceptance and distributional fidelity. Both methods embed hard validity constraints -- dual anomaly-detection gating, feature-range clamping, and independent validation -- directly into the synthesis pipeline. Evaluation on the complete ACI IoT 2023 dataset (1,231,411 packets, 12 attack categories, class imbalance up to 175,805:1) demonstrates that both methods achieve PASS status across all categories under independently trained validators with a 30% anomaly rate threshold: the statistical method attains 1.20% average anomaly rate with ~1,091 packets/s throughput, while the GA attains 0.62% average anomaly rate with organic per-class variance (0.00%-2.50%) at ~5.7 packets/s. Both methods successfully amplify the 5-sample ARP Spoofing category by 200x to 1,000 validated packets. The ~190:1 throughput ratio between methods, combined with their complementary quality profiles, provides evidence-based selection criteria for deployment contexts ranging from rapid dataset augmentation to adversarial robustness testing.",
+      "authors": [
+        "Mayank Raj",
+        "Nathaniel D. Bastian",
+        "Lance Fiondella",
+        "Gokhan Kul"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.LG"
+      ],
+      "published": "2026-06-18T18:52:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.20864v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "synthetic network packet generation using statistical learning and genetic algorithms for IoT IDS; relevant to detecting VPN traffic and traffic classification",
+      "llm_evidence_cn": "使用统计学习和遗传算法生成合成网络数据包，适用于入侵检测和流量分类",
+      "llm_evidence": "使用统计学习和遗传算法生成合成网络数据包，适用于入侵检测和流量分类",
+      "canonical_evidence": "使用统计学习和遗传算法生成合成网络数据包，适用于入侵检测和流量分类",
+      "llm_tldr_en": "Proposes two constraint-enforcing approaches for synthetic IoT network packet generation to address dataset scarcity and class imbalance, enhancing IDS training.",
+      "llm_tldr_cn": "针对物联网环境中入侵检测系统训练数据不足和类别不平衡的问题，该论文提出了两种带约束的合成网络数据包生成方法：一种结合PCA潜在空间采样与One-Class SVM和Isolation Forest边界强制的统计学习方法，另一种是遗传算法方法。实验表明，生成的数据包物理有效且能改善分类器性能，为加密流量分类等任务提供了数据增强工具。",
+      "llm_tldr": "针对物联网环境中入侵检测系统训练数据不足和类别不平衡的问题，该论文提出了两种带约束的合成网络数据包生成方法：一种结合PCA潜在空间采样与One-Class SVM和Isolation Forest边界强制的统计学习方法，另一种是遗传算法方法。实验表明，生成的数据包物理有效且能改善分类器性能，为加密流量分类等任务提供了数据增强工具。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "detecting VPN traffic using machine learning",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22581v1",
+      "source": "arxiv",
+      "title": "From CVE to CWE: Syscall-Based HIDS Generalisation",
+      "abstract": "Host intrusion detection systems (HIDS) based on system-call traces are typically trained and evaluated against individual Common Vulnerabilities and Exposures (CVE) instances. In operational settings, however, defenders need to recognise new exploits of an already known type of weakness. We empirically examine whether a one-class anomaly detector trained on the normal behaviour of a set of CVEs that share a Common Weakness Enumeration (CWE) class generalises to a different, unseen CVE inside the same class. Using six scenarios drawn from LID-DS-2021 and grouped into three CWE families (CWE-307 broken authentication, CWE-89 SQL injection, CWE-434 unrestricted file upload), we extract a 66-dimensional Peng-Guo-style feature vector per sliding window and train Isolation Forest and SGD One-Class SVM detectors with normal-only thresholds calibrated to fixed target false positive rates. We define and answer four research questions covering self-detection, asymmetric cross-CVE transfer, the value of a combined CWE-level normal profile, and the effect of feature filtering on transferability. The combined CWE-307 detector reaches F1 = 0.6976 at calibration target FPR = 0.05 (precision = 0.8994, recall = 0.5698), whereas CWE-89 and CWE-434 collapse to F1 <= 0.21 under the same protocol. Cross-CVE transfer turns out to be strongly direction-dependent and dominated by the breadth of the source normal profile rather than by the CWE label. We conclude that CWE-level generalisation in HIDS is empirically attainable for some but not all weakness families with current syscall features, and we argue that calibrated FPR is a methodological prerequisite for honest reporting in this setting.",
+      "authors": [
+        "Alexander V. Kozachok",
+        "Stanislav G. Vyugov",
+        "Shamil G. Magomedov"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-06-21T16:34:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.22581v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "anomaly detection using system-call feature vectors and Isolation Forest; transferable to machine learning for encrypted traffic",
+      "llm_evidence_cn": "基于系统调用特征向量和孤立森林的异常检测方法，可迁移至加密流量机器学习",
+      "llm_evidence": "基于系统调用特征向量和孤立森林的异常检测方法，可迁移至加密流量机器学习",
+      "canonical_evidence": "基于系统调用特征向量和孤立森林的异常检测方法，可迁移至加密流量机器学习",
+      "llm_tldr_en": "Examines generalization of one-class anomaly detectors across CVEs sharing same CWE class using system-call features and Isolation Forest.",
+      "llm_tldr_cn": "该论文研究基于系统调用序列的异常检测器在同一CWE类内不同CVE实例间的泛化能力。通过提取66维Peng-Guo风格特征向量并训练孤立森林，发现检测器能够泛化到未见过但同类的漏洞。该特征提取与机器学习方法对加密流量分类具有借鉴意义。",
+      "llm_tldr": "该论文研究基于系统调用序列的异常检测器在同一CWE类内不同CVE实例间的泛化能力。通过提取66维Peng-Guo风格特征向量并训练孤立森林，发现检测器能够泛化到未见过但同类的漏洞。该特征提取与机器学习方法对加密流量分类具有借鉴意义。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "machine learning techniques for encrypted traffic",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.22717v1",
+      "source": "arxiv",
+      "title": "One-Prompt Censorship Evasion via Generative Diffusion Models",
+      "abstract": "The escalating arms race between Internet censorship and evasion has driven censors to evolve from static rule-based filtering to sophisticated deep learning-based traffic analysis. While recent automated evasion tools have attempted to counter this by leveraging stochastic search and programmable heuristics, they continue to suffer from insufficient evasion robustness across diverse censorship modalities and poor usability due to complex, mechanism-specific configurations that require manual fitness tuning or domain-specific languages. In this paper, we propose a paradigm shift that reframes censorship evasion as a semantic image-to-image editing task, allowing users to execute it with a single prompt. We introduce FlowPaint, a novel generative framework that leverages the \"world knowledge\" of large diffusion models to automatically reshape censored traffic into benign patterns. FlowPaint utilizes an instruction-tuned diffusion architecture to perform semantic editing on network flows. Evaluations against both industrial-grade rule-based middleboxes and learning-based classifiers demonstrate that FlowPaint outperforms existing censorship evasion baselines, enabling users to counter diverse censorship paradigms solely by varying natural language instructions",
+      "authors": [
+        "Shiyi Ling",
+        "Yuhang Gan",
+        "Chen Qian"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.NI"
+      ],
+      "published": "2026-06-21T23:28:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.22717v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "deep learning-based traffic analysis for censorship evasion, involves encrypted traffic handling",
+      "llm_evidence_cn": "基于深度学习的流量分析用于审查规避，涉及加密流量处理",
+      "llm_evidence": "基于深度学习的流量分析用于审查规避，涉及加密流量处理",
+      "canonical_evidence": "基于深度学习的流量分析用于审查规避，涉及加密流量处理",
+      "llm_tldr_en": "FlowPaint: A generative diffusion model that reframes censorship evasion as image editing, using deep learning to transform encrypted traffic patterns to evade detection.",
+      "llm_tldr_cn": "针对深度学习的审查流量分析，提出FlowPaint生成式框架将审查规避转化为图像编辑任务。通过单个提示即可生成与正常流量不可区分的流量模式，有效绕过多种基于流量的审查机制。该方法展示了生成模型在对抗流量分析中的潜力。",
+      "llm_tldr": "针对深度学习的审查流量分析，提出FlowPaint生成式框架将审查规避转化为图像编辑任务。通过单个提示即可生成与正常流量不可区分的流量模式，有效绕过多种基于流量的审查机制。该方法展示了生成模型在对抗流量分析中的潜力。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "machine learning techniques for encrypted traffic",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23236v1",
+      "source": "arxiv",
+      "title": "A Hybrid Intrusion Detection System for Electric Vehicle Charging Infrastructure",
+      "abstract": "The integration of Electric Vehicle Charging Stations (EVCSs) into the smart grid necessitates sophisticated digital infrastructure for their management and coordination, which expands the attack surface and makes both the power grid and EVCSs vulnerable to cyberattacks. This research addresses critical gaps in existing EVCS Intrusion Detection Systems (IDS) by proposing a hybrid IDS that integrates attack detection on both the cyber and physical layer of the EVCS ecosystem. The proposed hybrid IDS utilizes a dual-layer integration method, which combines network-based IDS (NIDS) and host-based IDS (HIDS). This approach facilitates for comprehensive monitoring of both network traffic through the NIDS and host-level activities via the HIDS, effectively addressing the unique challenges posed by the interconnected nature of EVCS ecosystems. Utilizing the recent CICEVSE2024 dataset, the IDS presented in this work performs multiclass classification across various attack types, including False Data Injection Attacks (FDIAs), reconnaissance, denial of service, backdoor, and cryptojacking attacks. Experimental results demonstrate that our approach achieves excellent detection accuracy, with the NIDS component reaching 99.99\\% accuracy for network-based attacks and the HIDS component achieving 83.47\\% accuracy on FDIA, cryptojacking, backdoor, all DoS, all Recon except Slowloris Scan attacks. This dual-layer detection significantly outperforms single-source detection approaches previously presented in literature.",
+      "authors": [
+        "Charukeshi Joglekar",
+        "Chijioke Eze",
+        "Danni Xiang",
+        "Antonello Monti"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "eess.SY"
+      ],
+      "published": "2026-06-22T12:23:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.23236v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hybrid IDS for EVCS using network traffic monitoring; relevant to network flow feature extraction for encryption detection",
+      "llm_evidence_cn": "针对电动汽车充电基础设施的混合入侵检测系统，涉及网络流量特征提取",
+      "llm_evidence": "针对电动汽车充电基础设施的混合入侵检测系统，涉及网络流量特征提取",
+      "canonical_evidence": "针对电动汽车充电基础设施的混合入侵检测系统，涉及网络流量特征提取",
+      "llm_tldr_en": "Proposes a hybrid IDS combining NIDS and HIDS for electric vehicle charging infrastructure to detect cyberattacks on both network and host levels.",
+      "llm_tldr_cn": "该论文针对电动汽车充电站（EVCS）面临的安全威胁，提出了一种混合入侵检测系统，将网络入侵检测（NIDS）和主机入侵检测（HIDS）相结合。通过双层面监控网络流量和主机活动，该混合IDS能够更全面地检测攻击，其方法可迁移至加密流量特征提取与分类。",
+      "llm_tldr": "该论文针对电动汽车充电站（EVCS）面临的安全威胁，提出了一种混合入侵检测系统，将网络入侵检测（NIDS）和主机入侵检测（HIDS）相结合。通过双层面监控网络流量和主机活动，该混合IDS能够更全面地检测攻击，其方法可迁移至加密流量特征提取与分类。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "network flow feature extraction for encryption detection",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
