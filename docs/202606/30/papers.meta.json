@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-30",
+  "date": "2026-06-30",
+  "generated_at": "2026-06-30T21:09:04",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/30/2606.29909v1-traffic-cbm-a-structurally-interpretable-multimodal-framework-for-encrypted-traffic-classification",
+      "section": "deep",
+      "title_en": "Traffic-CBM: A Structurally Interpretable Multimodal Framework for Encrypted Traffic Classification",
+      "authors": "Honglei Jin, Wenshuo Chen, Shaofeng Liang, Haozhe Jia, Menshuo Zhao, Shuxu Jin, Songning Lai, Yutao Yue",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29909v1",
+      "score": "9.0",
+      "evidence": "面向加密流量分类的结构可解释多模态框架",
+      "tldr": "加密流量分类性能强但难以解释，现有方法将多模态证据融合为不透明特征。本文提出Traffic-CBM，将流统计、时序和字节级证据组织成分层概念空间，形成显式可解释表示。在多个基准上取得有竞争力且平衡的分类性能，同时提供比传统融合模型更清晰的结构解释。该方法提升了模型透明度，有助于分析异构流量证据的决策贡献。",
+      "tags": "query:crypto-class",
+      "abstract_en": "Encrypted traffic classification has achieved strong performance, but its decision process remains difficult to interpret. Existing methods usually combine flow statistics, packet sequences, and byte-level representations into opaque latent features, making it unclear which type of evidence actually drives the prediction. In this paper, we propose Traffic-CBM, a structurally interpretable multimodal framework for encrypted traffic classification. Instead of directly fusing heterogeneous traffic signals into a black-box representation, Traffic-CBM organizes them into a unified hierarchical concept space. These concepts are not manually annotated semantic attributes; rather, they are scalar evidence summaries constrained by predefined traffic evidence groups. More specifically, grouped flow statistics are mapped to statistical concepts, dedicated temporal encoders learn temporal concepts from disjoint feature subspaces, and byte-level evidence is further organized into packet-level and cross-packet concepts. This design turns heterogeneous traffic evidence into an explicit concept representation and makes different levels of traffic evidence easier to analyze. We evaluate Traffic-CBM on multiple encrypted traffic benchmarks. Results show that it achieves competitive and balanced classification performance while providing a clearer structural interpretation interface than conventional end-to-end fusion models. Further analyses suggest that the learned concept space is actively used in the prediction process and provides a clearer structural explanation of multimodal traffic evidence.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

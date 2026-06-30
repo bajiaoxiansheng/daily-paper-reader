@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-30 <!--dpr-date:20260630-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/30/2606.29909v1-traffic-cbm-a-structurally-interpretable-multimodal-framework-for-encrypted-traffic-classification" data-sidebar-item="{&quot;title&quot;: &quot;Traffic-CBM: A Structurally Interpretable Multimodal Framework for Encrypted Traffic Classification&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.29909v1-traffic-cbm-a-structurally-interpretable-multimodal-framework-for-encrypted-traffic-classification&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;面向加密流量分类的结构可解释多模态框架&quot;}">Traffic-CBM: A Structurally Interpretable Multimodal Framework for Encrypted Traffic Classification</a>
   * 2026-06-25 <!--dpr-date:20260625-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/25/2606.20864v1-synthetic-network-packet-generation-through-statistical-learning-and-genetic-algorithms" data-sidebar-item="{&quot;title&quot;: &quot;Synthetic Network Packet Generation through Statistical Learning and Genetic Algorithms&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.20864v1-synthetic-network-packet-generation-through-statistical-learning-and-genetic-algorithms&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;使用统计学习和遗传算法生成合成网络数据包，适用于入侵检测和流量分类&quot;}">Synthetic Network Packet Generation through Statistical Learning and Genetic Algorithms</a>
