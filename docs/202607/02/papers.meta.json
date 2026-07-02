@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-02",
+  "date": "2026-07-02",
+  "generated_at": "2026-07-02T21:38:53",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/02/2606.29797v1-multi-level-distributional-entropy-for-explainable-network-intrusion-detection",
+      "section": "quick",
+      "title_en": "Multi-Level Distributional Entropy for Explainable Network Intrusion Detection",
+      "authors": "Mohamed Aly Bouke, Md Shohel Sayeed, Swee-Huay Heng, Azizol Abdullah, Mohamed Othman",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29797v1",
+      "score": "7.0",
+      "evidence": "提出从流级统计信息中提取多级分布熵特征用于网络入侵检测，直接适用于加密流量检测中的网络流特征提取",
+      "tldr": "传统网络入侵检测依赖聚合流统计，丢失分布结构，且现有熵度量需要原始包序列。本文提出多级分布熵（MDE）框架，直接从流级统计量计算三层熵特征：流内高斯差分熵、跨方向JS散度、TCP标志模式香农熵。在四个基准上，仅熵特征加权F1达0.708-0.989，匹配传统特征。但全面指标暴露聚合F1掩盖的失败：CICIDS-2018中F1=0.74但检测率仅0.48，时间偏移下阈值排名分歧严重。SHAP稳定性分析确认熵归因可复现且领域一致，为可解释检测提供新视角。",
+      "tags": "query:crypto-class",
+      "abstract_en": "Machine learning network intrusion detection systems (IDS) rely on aggregate flow statistics that discard distributional structure, while established entropy measures require raw packet sequences unavailable in pre-aggregated flow datasets. We propose Multi-Level Distributional Entropy (MDE), an analytical framework that derives interpretable entropy features directly from flow-level summary statistics at three levels: within-flow Gaussian differential entropy, cross-directional Jensen-Shannon divergence (JSD), and Transmission Control Protocol (TCP) flag-pattern Shannon entropy, without raw packet access or training data. Across four benchmarks (NSL-KDD, CICIDS-2017, CICIDS-2018, UNSW-NB15) under a leakage-free fold-local pipeline, entropy-only features achieve weighted F1 of 0.708-0.989, matching conventional features without degrading performance. Full operational metric reporting then exposes failure modes that aggregate F1 conceals. On CICIDS-2018, F1=0.74 hides a detection rate (DR) of 0.48, and on held-out attack families F1 exceeds 0.998 while DR falls to zero. Under temporal shift, a pseudo-live replay of 703K flows reveals a threshold-ranking divergence in which score ranking is preserved (AUC=0.87) but fixed thresholds collapse (DR=0.082) and recalibration offers no recovery. SHapley Additive exPlanations (SHAP) fold-stability analysis (Spearman rho=0.80-0.95) confirms that entropy attributions are reproducible and domain-coherent across heterogeneous environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/02/2606.31619v1-hybrid-topological-data-analysis-and-lstm-networks-for-enhanced-network-intrusion-detection-using-cic-ids2017-dataset",
+      "section": "quick",
+      "title_en": "Hybrid Topological Data Analysis and LSTM Networks for Enhanced Network Intrusion Detection Using CIC-IDS2017 Dataset",
+      "authors": "Amar Jeet, Bhaskar Ranjan Karn, Dinesh Kumar",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31619v1",
+      "score": "6.0",
+      "evidence": "使用LSTM深度学习进行网络流量异常检测，适用于加密流量分类",
+      "tldr": "网络入侵检测系统需先进技术检测恶意流量。本文提出混合拓扑数据分析(TDA)与LSTM网络的方法，利用持续同构提取拓扑特征并建模时序依赖。在CIC-IDS2017数据集上，AUC与F1均达1.000，5折交叉验证F1=0.999。该方法显著优于TDA+随机森林和孤立森林基线，验证了特征互补性。",
+      "tags": "query:crypto-class",
+      "abstract_en": "Network intrusion detection systems (NIDS) are crucial in cybersecurity infrastructure, needing advanced techniques to detect hostile activity in network traffic. This research introduces a hybrid approach that combines Topological Data Analysis (TDA) with Long Short-Term Memory (LSTM) networks to improve anomaly detection in network security. Our multi-layered design combines TDA's persistent homology with LSTM networks to capture topological characteristics of network traffic patterns and simulate temporal sequences. We assessed our methodology using the CIC-IDS2017 dataset, which includes over 2.8 million labelled flows, 77 network variables, and 14 attack categories that reflect modern threat landscapes such as DDoS, brute force, web attacks, penetration, and botnet activities. Integrating Betti curves and persistence diagrams with deep learning architectures enhances feature extraction performance. Our hybrid TDA+LSTM model has an AUC of 1.000 and F1-score of 1.000, with 5-fold cross-validation producing a mean AUC of 1.000 $\\pm$ 0.000 and mean F1 of 0.999 $\\pm$ 0.001. An ablation research demonstrates the complimentary contributions of topological (F1=0.990) and temporal characteristics (F1=1.000). Comparative research shows that the suggested strategy beats TDA+Random Forest (F1=0.994) and Isolation Forest (F1=0.835) baselines in several attack categories.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

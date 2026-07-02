@@ -1,0 +1,96 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-02T21:37:29.865783+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.29797v1",
+      "source": "arxiv",
+      "title": "Multi-Level Distributional Entropy for Explainable Network Intrusion Detection",
+      "abstract": "Machine learning network intrusion detection systems (IDS) rely on aggregate flow statistics that discard distributional structure, while established entropy measures require raw packet sequences unavailable in pre-aggregated flow datasets. We propose Multi-Level Distributional Entropy (MDE), an analytical framework that derives interpretable entropy features directly from flow-level summary statistics at three levels: within-flow Gaussian differential entropy, cross-directional Jensen-Shannon divergence (JSD), and Transmission Control Protocol (TCP) flag-pattern Shannon entropy, without raw packet access or training data. Across four benchmarks (NSL-KDD, CICIDS-2017, CICIDS-2018, UNSW-NB15) under a leakage-free fold-local pipeline, entropy-only features achieve weighted F1 of 0.708-0.989, matching conventional features without degrading performance. Full operational metric reporting then exposes failure modes that aggregate F1 conceals. On CICIDS-2018, F1=0.74 hides a detection rate (DR) of 0.48, and on held-out attack families F1 exceeds 0.998 while DR falls to zero. Under temporal shift, a pseudo-live replay of 703K flows reveals a threshold-ranking divergence in which score ranking is preserved (AUC=0.87) but fixed thresholds collapse (DR=0.082) and recalibration offers no recovery. SHapley Additive exPlanations (SHAP) fold-stability analysis (Spearman rho=0.80-0.95) confirms that entropy attributions are reproducible and domain-coherent across heterogeneous environments.",
+      "authors": [
+        "Mohamed Aly Bouke",
+        "Md Shohel Sayeed",
+        "Swee-Huay Heng",
+        "Azizol Abdullah",
+        "Mohamed Othman"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-29T05:19:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.29797v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes Multi-Level Distributional Entropy features from flow-level statistics for network intrusion detection, directly applicable to network flow feature extraction for encryption detection",
+      "llm_evidence_cn": "提出从流级统计信息中提取多级分布熵特征用于网络入侵检测，直接适用于加密流量检测中的网络流特征提取",
+      "llm_evidence": "提出从流级统计信息中提取多级分布熵特征用于网络入侵检测，直接适用于加密流量检测中的网络流特征提取",
+      "canonical_evidence": "提出从流级统计信息中提取多级分布熵特征用于网络入侵检测，直接适用于加密流量检测中的网络流特征提取",
+      "llm_tldr_en": "Proposes Multi-Level Distributional Entropy (MDE) to extract interpretable entropy features from pre-aggregated flow statistics without raw packets, achieving high performance on four IDS benchmarks, and provides explainable features for network traffic classification.",
+      "llm_tldr_cn": "针对现有网络入侵检测系统依赖聚合流统计量丢失分布结构的问题，提出多级分布熵（MDE）框架，无需原始数据包即可从流级摘要统计中导出可解释熵特征，在四个基准数据集上实现高检测性能，为网络流量分类提供了一种无需训练的、可解释的特征提取方法。",
+      "llm_tldr": "针对现有网络入侵检测系统依赖聚合流统计量丢失分布结构的问题，提出多级分布熵（MDE）框架，无需原始数据包即可从流级摘要统计中导出可解释熵特征，在四个基准数据集上实现高检测性能，为网络流量分类提供了一种无需训练的、可解释的特征提取方法。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "network flow feature extraction for encryption detection",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.31619v1",
+      "source": "arxiv",
+      "title": "Hybrid Topological Data Analysis and LSTM Networks for Enhanced Network Intrusion Detection Using CIC-IDS2017 Dataset",
+      "abstract": "Network intrusion detection systems (NIDS) are crucial in cybersecurity infrastructure, needing advanced techniques to detect hostile activity in network traffic. This research introduces a hybrid approach that combines Topological Data Analysis (TDA) with Long Short-Term Memory (LSTM) networks to improve anomaly detection in network security. Our multi-layered design combines TDA's persistent homology with LSTM networks to capture topological characteristics of network traffic patterns and simulate temporal sequences. We assessed our methodology using the CIC-IDS2017 dataset, which includes over 2.8 million labelled flows, 77 network variables, and 14 attack categories that reflect modern threat landscapes such as DDoS, brute force, web attacks, penetration, and botnet activities. Integrating Betti curves and persistence diagrams with deep learning architectures enhances feature extraction performance. Our hybrid TDA+LSTM model has an AUC of 1.000 and F1-score of 1.000, with 5-fold cross-validation producing a mean AUC of 1.000 $\\pm$ 0.000 and mean F1 of 0.999 $\\pm$ 0.001. An ablation research demonstrates the complimentary contributions of topological (F1=0.990) and temporal characteristics (F1=1.000). Comparative research shows that the suggested strategy beats TDA+Random Forest (F1=0.994) and Isolation Forest (F1=0.835) baselines in several attack categories.",
+      "authors": [
+        "Amar Jeet",
+        "Bhaskar Ranjan Karn",
+        "Dinesh Kumar"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "math.DS"
+      ],
+      "published": "2026-06-30T13:08:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.31619v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "uses LSTM deep learning for network traffic anomaly detection, applicable to encrypted traffic classification",
+      "llm_evidence_cn": "使用LSTM深度学习进行网络流量异常检测，适用于加密流量分类",
+      "llm_evidence": "使用LSTM深度学习进行网络流量异常检测，适用于加密流量分类",
+      "canonical_evidence": "使用LSTM深度学习进行网络流量异常检测，适用于加密流量分类",
+      "llm_tldr_en": "Proposes a hybrid TDA-LSTM model for network intrusion detection, capturing topological and temporal patterns in traffic flows, demonstrating strong detection performance on the CIC-IDS2017 dataset.",
+      "llm_tldr_cn": "现有网络入侵检测方法难以同时捕捉流量的拓扑结构和时间序列特征。本文提出了一种结合拓扑数据分析（TDA）与长短期记忆网络（LSTM）的混合方法，利用TDA提取网络流量的持久同调拓扑特征，再通过LSTM对时序模式进行建模。在CIC-IDS2017数据集上的实验表明，该方法能有效检测多种攻击类型，具有较高的准确率和召回率。该工作为加密流量分类领域提供了可迁移的深度学习架构与特征工程思路。",
+      "llm_tldr": "现有网络入侵检测方法难以同时捕捉流量的拓扑结构和时间序列特征。本文提出了一种结合拓扑数据分析（TDA）与长短期记忆网络（LSTM）的混合方法，利用TDA提取网络流量的持久同调拓扑特征，再通过LSTM对时序模式进行建模。在CIC-IDS2017数据集上的实验表明，该方法能有效检测多种攻击类型，具有较高的准确率和召回率。该工作为加密流量分类领域提供了可迁移的深度学习架构与特征工程思路。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "deep learning approaches for encrypted traffic classification",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
