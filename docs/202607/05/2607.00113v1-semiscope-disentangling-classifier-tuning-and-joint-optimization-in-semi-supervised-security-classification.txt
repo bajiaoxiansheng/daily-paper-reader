@@ -1,0 +1,464 @@
+Title: SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification
+
+URL Source: https://arxiv.org/pdf/2607.00113v1
+
+Published Time: Thu, 02 Jul 2026 00:09:17 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification 
+
+## Rui Shu 
+
+North Carolina State University 
+
+## Tianpei Xia 
+
+North Carolina State University 
+
+## Jingzhu He 
+
+ShanghaiTech University 
+
+Abstract 
+
+Background. Labeled data for security classification is scarce. Semi-supervised learning (SSL) reduces this burden by propagating labels from a small labeled pool to larger unlabeled pools. Yet security applications often use SSL as a black box: default parameters, a fixed classifier, and no explicit handling of pseudo-label-induced class imbalance. 
+
+Aims. Recent work reports sizeable gains from optimizing SSL pipelines through joint hyperpara-meter search, AutoML on pseudo-labeled data, or per-component tuning. These gains are hard to attribute. They may reflect useful joint SSL–classifier interactions, or they may mostly come from the simpler step of tuning the downstream classifier. We disentangle these effects for binary tabular security classification with classical SSL and tree-based classifiers. 
+
+Method. We build SemiScope as an analysis instrument, not as a deployment recommendation. It uses Bayesian Optimization to jointly choose SSL settings, confidence filtering, oversampling, classifier family, and classifier hyperparameters. The key control is Tuned-Clf: it fixes SSL to defaults but receives the same 100-trial classifier search budget and the same validation-set decision-threshold tuning procedure as SemiScope. At 10% labels, we compare SemiScope and Tuned-Clf with paired TOST using a ±1.0 g-measure smallest effect size of interest. 
+
+Results. SemiScope exceeds every default SSL baseline on all five datasets, improving over the strongest default baseline by 0.7–12.7 g-measure points, depending on the dataset. Under the equal-budget control, however, Tuned-Clf is statistically equivalent to the full joint pipeline on 4 out of 5 datasets, while Phishing is inconclusive. Classifier hyperparameter optimization (HPO) alone recovers a median 86% of SemiScope’s gain over Default Self-Training (ST) + Random Forest (RF). With equal budgets and symmetric threshold tuning, little extra value remains. 
+
+Conclusions. For these benchmarks, the reusable contribution is the decomposition protocol. Practically, a simpler recipe is sufficient: use Self-Training, tune the classifier with Bayesian Optimization, and tune the decision threshold on validation data. This recipe reaches within 1 g-measure of the Supervised RF reference at 20–30% labels on four datasets and at 40% labels on Drebin, at the same or lower label rate than Default ST + RF in every dataset. 
+
+2012 ACM Subject Classification Security and privacy → Intrusion detection systems; Computing methodologies → Semi-supervised learning settings 
+
+Keywords and phrases Semi-Supervised Learning, Hyperparameter Optimization, Security Classific-ation, Data Imbalance, Empirical Software Engineering 
+
+Digital Object Identifier 10.4230/LIPIcs... 
+
+## 1 Introduction 
+
+Security practitioners increasingly rely on machine learning to detect threats such as spam, malware [ 35 ], and network intrusions [ 29 ]. The bottleneck is reliable labels: security labeling  
+
+> ©Rui Shu, Tianpei Xia and Jingzhu He; licensed under Creative Commons License CC-BY 4.0 Leibniz International Proceedings in Informatics
+> Schloss Dagstuhl – Leibniz-Zentrum für Informatik, Dagstuhl Publishing, Germany
+> arXiv:2607.00113v1 [cs.LG] 30 Jun 2026
+
+XX:2 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+requires domain expertise, manual investigation, and threat taxonomy judgment [ 37 ]. Mean-while, organizations collect large volumes of unlabeled security data, including network flows, URLs, and app manifests [31, 22, 6]. Semi-supervised learning (SSL) addresses this bottleneck by propagating labels from a small labeled pool to a large unlabeled pool [ 45 ]. SSL has been applied to insider threat detection [ 20 ], malware classification [ 18 ], fraud detection [ 41 ], and intrusion detection [ 27 ]. These applications often treat SSL as a black box preprocessing step. They use default SSL hyperparameters, a single fixed downstream classifier, and no explicit mechanism for the class imbalance introduced by pseudo-labeling. This is especially risky on imbalanced security data: with few labels, pseudo-labeling can further underrepresent the minority class, and naive oversampling can replicate those mistakes. A semi-supervised security system is therefore a configurable pipeline , not just an SSL algorithm. Its SSL method, SSL hyperparameters, confidence filter, oversampling strategy, classifier family, classifier hyperparameters, and decision threshold can all change the final model. Prior SSL studies in security [ 20 , 18 , 41 , 27 ] report gains from tuning or automating parts of this pipeline, but they often compare tuned pipelines against default classifiers or use asymmetric threshold evaluation. Such protocols show that tuning helps, but they do not identify which part of the pipeline caused the gain. They leave open which components account for most of the observed improvement, whether joint SSL–classifier optimization outperforms classifier tuning at equal compute budget, and whether unequal search budgets or different threshold policies inflate the apparent gains. We answer with baselines that use equal budgets, symmetric threshold tuning, and fixed rules. The Phishing result illustrates the confound (Table 4). At 10% labels, a full joint search reaches 96.1 g-measure, far above default label propagation (LP) [ 46 ] (87.7) and LP with Synthetic Minority Oversampling Technique (SMOTE) [ 10 ] (89.5). However, tuning only the downstream classifier on the same default LP output reaches 95.5 under the same budget of 100 trials. In this example, the classifier tuning control explains almost all of the apparent advantage of joint pipeline optimization. This motivates our central question: how much of the gain comes from joint optimization, and how much from classifier tuning alone? 
+
+To answer, we construct SemiScope as a controlled joint search instrument. SemiScope uses Bayesian optimization [ 33 ] over SSL settings, classifier family and hyperparameters, confidence filtering, and oversampling with target ratios. We do not present SemiScope as the method practitioners should deploy by default. Instead, it provides a strong joint search reference under a fixed budget of 100 trials. Our key comparison is Tuned-Clf, a control with the same budget that keeps SSL at defaults and spends the same 100 trials on the same classifier family and hyperparameter space. All treatments tune the decision threshold on validation data before final test evaluation. This design isolates classifier hyperparameter optimization (HPO) from the residual value of the joint formulation. To our knowledge, no prior SSL study in security has made this decomposition with symmetric thresholds and equal budgets. The decomposition yields three findings: (F1) SemiScope beats every default baseline on all five datasets, consistent with prior reports. The gains over the strongest default baseline range from +0.7 to +12.7 g-measure. (F2) Against the classifier tuner with the same budget, the full joint pipeline is statistically equivalent on four of five datasets under paired TOST [ 19 ] with SESOI = ±1.0, while the Phishing dataset is inconclusive. Classifier hyperparameter optimization (HPO) alone recovers a median 86% of SemiScope’s gain over default Self-Training (ST) [ 30 , 21 ] + Random Forest (RF) [ 9]. (F3) Decision threshold tuning materially affects the comparison. Almost all tuned thresholds fall below the default Rui Shu, Tianpei Xia and Jingzhu He XX:3 
+
+0.5, so evaluation with a fixed threshold can collapse minority recall and distort comparisons. Thus, the main contribution is not a new optimizer, but an empirical decomposition of where SSL pipeline gains come from. Under fair controls, gains from classifier tuning can be mistaken for gains from joint SSL pipeline optimization. The appropriate benchmark is therefore not a joint optimizer versus default SSL, but a joint optimizer versus a classifier tuner with the same budget and threshold policy. We make three contributions: 
+
+Controlled decomposition. SemiScope serves as the joint search instrument , while Tuned-Clf serves as the classifier tuning control with the same budget. This separates gains due to joint SSL–classifier optimization from gains due to classifier HPO. 
+
+Symmetric threshold protocol. Each treatment tunes its decision threshold on validation data before test evaluation. This avoids comparing methods under different threshold assumptions on datasets with 12–20% minority classes. 
+
+Actionable recipe. Use Self-Training as default SSL, add classifier HPO with Bayesian optimization, and tune the validation threshold. This reaches within 1 g-measure of the Supervised RF reference at 20–30% labels on four datasets and at 40% labels on Drebin, at the same or lower label rate than Default ST + RF in every dataset. 
+
+## 2 Background and Related Work 2.1 Semi-Supervised Learning in Security 
+
+Semi-supervised learning (SSL) [ 45 ] trains models from a small labeled pool and a larger unlabeled pool. This setting matches many security tasks, where unlabeled data are abundant but reliable labels are quite expensive. A recent survey [ 24 ] catalogs growing SSL use in cybersecurity, including insider threat detection [ 20 ], malware classification [ 4 , 18 ], fraud detection [41], and intrusion detection [27]. The classical SSL methods used in this paper fall into two families [ 39 ]. Graph methods ,such as label propagation [ 46 ] and label spreading [ 44 ], propagate labels along similarity graph edges. Wrapper methods , such as self-training [ 30 , 21 ], iteratively expand the labeled pool using a classifier’s own predictions. Both families expose the downstream classifier to pseudo-labels or class scores on unlabeled samples. That coupling is important for imbalanced security data: ambiguous samples tend to be assigned to the majority class, so pseudo-labeling can worsen class imbalance [ 15 ]. Imbalance handling is therefore part of the SSL pipeline rather than a separate step after SSL. 
+
+## 2.2 Oversampling for Class Imbalance 
+
+Oversampling is a common response to class imbalance after the training labels have been fixed. SMOTE [ 10 ] generates synthetic minority samples by interpolating between nearest neighbors, Borderline-SMOTE [ 13 ] focuses on boundary regions, and SMOTUNED [ 2] tunes SMOTE’s k, m, rM via differential evolution. In an SSL pipeline, however, oversampling is coupled to pseudo-label quality. If pseudo-labels are wrong, synthetic samples can be generated in the wrong region and amplify the error. For this reason, SemiScope uses a SMOTE strategy with a target class ratio rather than a fixed synthetic count. The strategy is tuned jointly with SSL and classifier parameters, so the optimizer decides both oversampling activation and target ratio. XX:4 SemiScope: Disentangling Classifier Tuning and Joint Optimization                                                       
+
+> Table 1 Methodological coverage of representative SSL, AutoML, and security classification work.
+> ✓supported; ✗not reported. ∗Joint classifier HPO, but no SSL tuning. †Fixed SSL confidence threshold, and not tuned.
+> Work SSL Tune Multi-Clf. Imbal. Thresh. Multi-Seed Joint HPO
+> Auto-sklearn [12] ✗✓✓✗✗✓∗
+> FLAML [40] ✗✓✗✗✗✓∗
+> FixMatch [34] ✓†✗✗✗✗✗
+> Le [20] ✗✗✗✗✗✗
+> Wang [41] ✗✗✗✗✗✗
+> Kolosnjaji [18] ✗✗✗✗✗✗
+> SemiScope ✓✓✓✓✓✓
+
+## 2.3 Hyperparameter Optimization and Confidence Filtering 
+
+A semi-supervised classification system has the same structure as a configurable software system: multiple choices interact, and exhaustive search is impractical [ 25 , 16 ]. This motivates hyperparameter optimization (HPO) over pipeline choices, but it does not by itself show that the joint search space is necessary. SemiScope operationalizes joint search with Tree-structured Parzen Estimator (TPE) [ 8] Bayesian optimization [ 33 ] via Optuna [ 3 ]. TPE handles the hierarchical conditional space where parameters for a method enter only when that method is sampled. AutoML systems such as Auto-sklearn [ 12 ], TPOT [ 26 ], and FLAML [ 40 ] automate classifier selection and tuning but operate on fully labeled data. When they are applied after SSL, the pseudo-labels become fixed training labels for the AutoML system. SemiScope instead keeps SSL algorithm choice, pseudo-label filtering, and oversampling inside the search space, rather than tuning only the downstream classifier. Confidence filtering is one such choice specific to SSL, explored mainly in deep learning settings such as FixMatch [ 34 ] and FreeMatch [ 42 ]. FixMatch uses a fixed threshold, while FreeMatch introduces adaptive thresholding. These methods target image data and rely on consistency loss from augmentations. Their assumptions transfer poorly to tabular security data, where augmentation can be semantically ambiguous. SemiScope adapts confidence filtering to tabular security data with traditional ML classifiers by making the filter threshold a pipeline hyperparameter. The optimizer can raise the threshold when pseudo-labels are noisy, or effectively disable filtering when it discards useful data. Recent SSL and self-supervised methods for tabular data, including VIME [ 43 ], SubTab [ 38 ], SCARF [ 7 ], and TabPFN [ 14 ], target deep architectures and substantial compute. Our study focuses instead on classical SSL with tree classifiers, a common setup in security SSL studies. Testing joint search against independent tuning therefore depends on the comparison protocol, not only on the optimizer. The software engineering literature on configurable systems shows that evaluation protocol can change method rankings. Nair et al. [ 25 ]demonstrated feature interactions that are not additive and break naive additive models. Jamshidi et al. [ 16 ] showed that configuration knowledge transfers across environments when the methodology controls for confounders. At the SSL level, we therefore use a classifier tuning control with the same budget and identical threshold tuning for all treatments. 
+
+## 2.4 Positioning 
+
+Taken together, the SSL, imbalance, HPO, and confidence filtering literatures position our work as a benchmarking and decomposition study. The study also follows evaluation guidance for security: Arp et al. [ 5] identify common pitfalls in ML-based security research, including unfair baselines and insufficiently diverse evaluation. We follow this guidance by using Rui Shu, Tianpei Xia and Jingzhu He XX:5       
+
+> Figure 1 SemiScope pipeline and shared evaluation protocol. Bayesian optimization [ 33 ] with TPE [ 8] (100 trials) samples pipeline parameters θfor SSL, filtering, oversampling, and classification. Validation g-measure selects the best configuration θ∗. The final decision threshold is tuned on Dval ,and every baseline uses the same threshold-tuning and held-out-test protocol.
+
+identical decision threshold tuning across treatments and evaluating five datasets spanning four task types. This matters for SSL pipelines because extra search effort or a favorable threshold can make a method appear better. A tuned joint pipeline compared only with defaults therefore mixes SSL choices with classifier tuning. Table 1 makes these controls explicit. SemiScope addresses the gap by decomposing these elements under equal budgets, repeated seeds, and symmetric thresholds. 
+
+## 3 SemiScope: Pipeline and Decomposition Framework 
+
+To make the decomposition operational, we first formalize SemiScope as a joint search over pipeline configurations. Given a labeled set SL, an unlabeled set SU , and a validation set 
+
+Dval , SemiScope seeks the configuration θ∗ that maximizes g-measure on Dval :
+
+ˆfθ = Pipeline (SL, S U ; θ),θ∗ = arg max 
+
+> θ∈Θ
+
+g-measure ( ˆfθ , D val 
+
+), (1) where θ denotes one complete pipeline configuration, ˆfθ is the trained predictor returned by Pipeline (·; θ), and Θ is the set of all configurations considered in the search. The space spans SSL method, SSL hyperparameters, confidence threshold, classifier type, classifier hyperparameters, and SMOTE [ 10 ] parameters (Table 2). Figure 1 shows the corresponding stages: SSL pseudo-labeling, confidence filtering, oversampling, classification, and validation-set threshold tuning. The reported numbers are computed once on held-out Dtest as described in Section 3.4. This formulation has two roles in the paper: it defines the full joint-search reference, and it provides axes that can be held fixed in matched baselines. In the rest of this section, we first define the optimized components, specify the shared evaluation protocol and search space, and then explain the controls used for decomposition. XX:6 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+## 3.1 Semi-Supervised Learning Methods 
+
+The pipeline begins by choosing how pseudo-labels are assigned to SU . SemiScope searches over three classical SSL methods, each returning a pseudo-label ˆyi and confidence score ci for every unlabeled sample. Label Propagation (LP) [ 46 ] constructs a similarity graph over all data points and propagates labels from labeled to unlabeled nodes via a Laplacian transition matrix, yielding a class distribution p(c|xi); its tunable hyperparameters are kernel type (KNN or RBF), kernel bandwidth, and maximum iterations. Label Spreading (LS) [44 ]follows the same graph-based intuition, but uses the normalized graph Laplacian and a clamping factor α ∈ (0 , 1) , where smaller α trusts the original labels more and larger α lets propagated mass flow more freely. Self-Training (ST) [30 , 21 ] is the wrapper alternative: it iteratively trains a base classifier, adds high-confidence predictions to the labeled pool, and retrains. Its internal acceptance threshold is st_threshold ∈ [0 .6, 0.99] . In SemiScope, the ST base estimator is coupled to the optimizer’s final classifier choice; for example, the base estimator uses the same classifier family and hyperparameters sampled for the final stage. This aligns SSL’s decision boundary with the downstream classifier’s. Before these SSL outputs enter the next stage, we settle two notational details. First, the per-sample confidence used by the external filter is ci = max c p(c|xi), computed from the converged label distribution (LP/LS) or from the base classifier’s predict_proba output (ST). These scores are not on identical scales across methods, but because the optimizer selects the method and the confidence threshold t jointly, it learns a threshold suited to whichever method is active. Second, ST’s internal st_threshold (which controls which samples ST accepts inside its retraining loop) is distinct from the external confidence threshold t (which is applied once after SSL completes), and therefore both are independently optimized. 
+
+## 3.2 Confidence-Based Pseudo-Label Filtering 
+
+After SSL produces pseudo-labels, the next decision is whether all of them should be trusted for classifier training. Standard SSL algorithms assign pseudo-labels to all unlabeled samples, including points in ambiguous feature-space regions where the assignment is close to random. Keeping these low-confidence assignments can corrupt the downstream classifier, and oversampling can then amplify the error: if SMOTE generates synthetic samples around mis-labeled pseudo-points, it creates minority instances in the wrong regions. SemiScope therefore filters pseudo-labels by confidence: 
+
+Sfiltered = {(xi, ˆyi) | ci ≥ t}, t ∈ [0 .5, 0.99] . (2) This threshold controls the precision–coverage tradeoff. For example, at t = 0 .5, the filter is effectively disabled because max c p(c|x) ≥ 0.5 by definition in binary classification, so all pseudo-labels survive. At t = 0 .9, only high-confidence pseudo-labels pass, yielding a smaller but cleaner training set. SemiScope makes t a search variable rather than a fixed cutoff, allowing the optimizer to keep reliable SSL outputs and filter noisy pseudo-labels. 
+
+## 3.3 Classifier Selection and Ratio-Targeted Oversampling 
+
+The filtered pseudo-labeled set is then combined with SL and passed to a downstream classifier. Prior work on SSL for security often uses a single downstream classifier. SemiScope instead treats the classifier family as a hyperparameter. It searches over three tree-based models commonly used for tabular security classification: Random Forest [9] for bagged decision trees, XGBoost [ 11 ] for regularized gradient boosting, and LightGBM [17 ] for Rui Shu, Tianpei Xia and Jingzhu He XX:7 
+
+Algorithm 1 SemiScope joint optimization loop.                                                                            
+
+> Input: training data Dtrain , validation data Dval , label rate r, imbalance threshold timb , trials N
+> Output: optimized model clf opt
+> 1Split Dtrain into SL(r%) and SU(1−r%);
+> 2for i←1to Ndo
+> 3Sample SSL method, classifier, confidence threshold t, SMOTE parameters ( ρ,k,rM),
+> use_scaling , and method/classifier-specific hyperparameters;
+> 4if use_scaling then standardize SL,SU,Dval with a scaler fit on SL;
+> 5Run SSL on SL∪SUto obtain pseudo-labels and confidences;
+> 6Keep samples with confidence ≥t; concatenate with SL→Dmixed ;
+> 7if minority fraction in Dmixed < t imb then apply SMOTE( ρ,k,rM);
+> 8Train classifier; tune decision threshold on Dval ;
+> 9Record g-measure on Dval ;
+> 10 Let θ∗be the configuration with highest g-measure;
+> 11 Retrain pipeline at θ∗; re-tune τon Dval over [0 .05 ,0.95] (step 0.01 );
+> 12 return clf opt ;
+
+leaf-wise gradient boosting with histogram splits. Per-family hyperparameters are listed in Table 2. Because each family exposes different hyperparameters, this creates a conditional search space. The Optuna [ 3] TPE sampler handles that structure natively: only the active family’s parameters enter the surrogate, which keeps the effective search budget concentrated. Before classifier training, the post-filter mixed set also determines whether oversampling is needed. SemiScope uses SMOTE with tunable k (neighbors) and rM (Minkowski distance power) following SMOTUNED [ 2 ]. Unlike prior work that uses a fixed synthetic count, SemiScope uses a ratio-targeted strategy. The optimizer specifies a target minority fraction 
+
+ρ ∈ [0 .2, 0.5] (i.e., the desired share of minority samples in the post-SMOTE mixed set), and the synthetic count is 
+
+m = max 
+
+(
+
+0, ⌊ ρ·nmaj  
+
+> 1−ρ
+
+⌋ − nmin 
+
+)
+
+(3) where nmaj , n min are post-filter class counts. SMOTE is activated only when the post-filter minority fraction falls below timb = 30% . When active, it draws m synthetic minority samples by linear interpolation between k nearest same-class neighbors under Minkowski power rM .The raw minority fractions in our datasets range from 12–20% (Table 3). Given this range, we set timb = 30% as a fixed guard threshold so post-filter sets that remain strongly skewed are eligible for SMOTE. This threshold only controls activation: once active, the target fraction ρ controls how much rebalancing is applied, from a mild adjustment to ρ → 0.5.
+
+## 3.4 Joint Optimization and Evaluation Protocol 
+
+Algorithm 1 shows how the preceding components are sampled in a single optimization loop. Each trial draws a complete configuration θ ∈ Θ, allowing the TPE surrogate to model cross-component interactions such as which classifier family pairs best with which SSL method and confidence threshold. We implement this search with Optuna and run 
+
+N =100 trials per configuration. Because method-specific parameters are active only when their method is sampled, each trial optimizes 16–18 parameters rather than every parameter in Θ. The decomposition study tests whether these modeled interactions matter. After N trials, we select the configuration with the highest validation g-measure and retrain the corresponding pipeline. We then tune its decision threshold on Dval by grid search over [0 .05 , 0.95] (step 0.01) and evaluate once on Dtest . The same procedure is applied to every treatment, with the labeled/unlabeled split fixed per seed. This symmetric threshold tuning is part of the estimator being compared, not a reporting detail: on imbalanced data, XX:8 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+Table 2 SemiScope hierarchical search space. Conditional parameters ( †) are active only for the selected SSL method or classifier; each trial activates 16–18 listed parameters. 
+
+Module Parameter Values / range Description 
+
+Selection SSL method {LP, LS, ST} Semi-supervised learning algorithm Classifier {RF, XGBoost, LightGBM} Classification algorithm Confidence threshold t [0 .5, 0.99] Minimum confidence to keep a pseudo-label LP †
+
+kernel {knn, rbf} Kernel function gamma (10 , 30) RBF kernel parameter n_neighbors (5 , 15) KNN kernel parameter max_iter (500 , 1500) Maximum iterations kernel {knn, rbf} Kernel function gamma (10 , 30) RBF kernel parameter LS † n_neighbors (5 , 15) KNN kernel parameter alpha (0 .1, 0.9) Clamping factor max_iter (500 , 1500) Maximum iterations ST † threshold (0 .6, 0.99) Self-training confidence threshold max_iter (5 , 50) Maximum self-training iterations n_estimators [50 , 200] Number of trees max_depth [1 , 25] Maximum tree depth max_features {sqrt, log2} Features for best split RF † min_samples_leaf [1 , 25] Minimum samples at leaf min_samples_split [2 , 25] Minimum samples to split a node max_leaf_nodes [2 , 100] Maximum leaf nodes bootstrap {True, False} Bootstrap sampling XGBoost †
+
+n_estimators [50 , 300] Number of boosting rounds max_depth [3 , 10] Maximum tree depth learning_rate [0 .01 , 0.3] Step size shrinkage subsample [0 .6, 1.0] Row subsampling ratio colsample_bytree [0 .6, 1.0] Column subsampling ratio min_child_weight [1 , 10] Minimum instance-weight sum per child gamma [0 .0, 5.0] Minimum loss reduction to split n_estimators [50 , 300] Number of boosting rounds max_depth [3 , 15] Maximum tree depth num_leaves [15 , 127] Maximum leaves per tree LightGBM † learning_rate [0 .01 , 0.3] Step size shrinkage subsample [0 .6, 1.0] Row subsampling ratio colsample_bytree [0 .6, 1.0] Column subsampling ratio min_child_samples [5 , 50] Minimum data in a leaf SMOTE k [1 , 20] Number of neighbors 
+
+rM [1 , 6] Minkowski distance power 
+
+ρ [0 .2, 0.5] Target minority fraction (post-SMOTE) Scaling use_scaling {True, False} Apply StandardScaler before SSL 
+
+a fixed τ = 0.5 cutoff can penalize different methods by different amounts. Without this protocol, the Tuned-Clf vs. SemiScope comparison would confound models with thresholds. 
+
+## 3.5 Search Space and Feature Scaling 
+
+The decomposition controls use the same classifier and pipeline search space, so we make that space explicit before defining the controls. Table 2 gives the hierarchical search space used by SemiScope and the controls. The top-level choices, SSL method and classifier type, activate method-specific parameter subsets in each trial. A boolean use_scaling 
+
+parameter toggles StandardScaler [28 ] before SSL; the scaler is fit on the labeled training data and then applied to all splits. Scaling can affect graph-based SSL because its kernels are distance-sensitive, while it is typically inert for tree models. 
+
+## 3.6 Decomposition Controls 
+
+The joint optimizer is a strong reference, but it cannot attribute gains by itself. We use matched controls with the same pipeline skeleton and vary only selected parts of Θ. The key control is Tuned-Clf : SSL remains at defaults, while the same 100-trial budget searches the same classifier space as SemiScope. This comparison estimates the residual value of joint SSL and classifier search; comparing Tuned-Clf with untuned defaults estimates classifier HPO alone. Ablations in Section 5 remove one component at a time. Equal compute and Rui Shu, Tianpei Xia and Jingzhu He XX:9                            
+
+> Table 3 Evaluation datasets and class imbalance. Label = 1 denotes the minority (threat) class.
+> Dataset Task Rows Features Imbalance
+> CIC-IDS-2017 [31] Intrusion detection 14,139 70 19.2% Drebin [6] Malware detection 4,126 215 16.0% NSL-KDD [36] Intrusion detection 9,779 122 18.0% Phishing [1] Phishing detection 5,681 48 12.0% UNSW-NB15 [23] Traffic classification 11,982 196 20.0%
+
+the same validation protocol make the attribution meaningful; otherwise, gains could reflect more search rather than a better formulation. 
+
+## 4 Experiment 4.1 Research Questions and Setup 
+
+The experiment follows the decomposition introduced above. RQ1 first establishes whether joint pipeline optimization improves over default SSL, AutoML, and supervised references. 
+
+RQ2 then tests the paper’s central attribution question: how much of that improvement comes from classifier HPO alone, and how much remains for joint SSL–classifier search? RQ3 
+
+breaks the pipeline apart through component ablations. RQ4 measures label efficiency by asking when joint optimization matches fully supervised performance. RQ5 finally evaluates whether the resulting gains justify the optimization cost. 
+
+## 4.2 Datasets and Preprocessing 
+
+We evaluate on five established binary tabular security benchmarks (Table 3) spanning four task types. All have 12–20% minority-class imbalance. To keep experiments tractable while preserving class ratios, datasets larger than 15,000 rows are stratified-sampled to ≈15,000 rows using seed 42; smaller datasets retain all available rows. For CIC-IDS-2017, we also remove duplicate network-flow records before sampling, because repeated rows are a known artifact of the raw capture. Removing duplicate records reduces potential train–test leakage and produces a more conservative subset than reports that retain duplicates. Therefore, CIC-IDS-2017 scores are intended for comparisons among treatments under our preprocessing pipeline, not for direct comparison with studies that use different preprocessing. Categorical features in NSL-KDD ( protocol_type , service , flag ) and UNSW-NB15 ( proto , service ,
+
+state ) are one-hot encoded. The label column is binarized (0 = benign, 1 = threat) and moved last. Drebin features are already binary API-call indicators, and no additional feature selection is applied. Because Drebin access is controlled by the upstream provider, we do not redistribute the raw Drebin data. For each seed, we first split every dataset into training (64%), validation (16%), and test (20%) partitions by stratified sampling. We then split the training partition into labeled (r%) and unlabeled ( 1−r%) pools for label rates r ∈ { 10 , 20 , . . . , 90 }%. Because the paper’s main decomposition is evaluated at the most label-scarce setting, the 10% label rate receives ten seeds for Tables 4, 5, 6, and 8. The remaining 20–90% label rates receive three seeds for the label-rate curves in Figure 2. We report mean ± standard deviation throughout. 
+
+## 4.3 Baselines 
+
+The baseline set is designed to separate performance comparison from causal attribution. SemiScope is compared against semi-supervised baselines and supervised references. Except XX:10 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+for the exploratory AutoML baseline noted below, all treatments use the same retrain, decision-threshold tuning, and single-shot test protocol (Section 3.4). 
+
+Supervised references anchor the upper end of the comparison under full labeling. RF, XGBoost, and LightGBM are trained with 100% labels, each in default and 100-trial Optuna-tuned forms. These rows are targets rather than direct competitors. 
+
+Default SSL baselines then show what standard SSL pipelines achieve before any pipeline tuning. Default LP/LS/ST + RF use scikit-learn’s default method hyperparameters paired with a default-hyperparameter Random Forest. LP/LS use a 7-nearest-neighbor kernel, 
+
+α = 0 .2 for LS, and 1000 maximum iterations. ST uses an RF base estimator, internal acceptance threshold 0.75 , kbest = 10 , and 10 self-training iterations. LP/LS + SMOTE apply SMOTE to the pseudo-labeled pool ( k = 5 , target minority fraction ρ=0 .5). 
+
+Tuned-Clf baselines isolate the value of classifier tuning on top of those default SSL outputs. LP+HPO and ST+HPO keep SSL at the defaults above and spend the full 100 Optuna trials searching over the same classifier family and hyperparameter space as SemiScope. These are the key decomposition controls. 
+
+AutoML provides an exploratory comparison with a general-purpose tuner. FLAML [ 40 ]runs on pseudo-labeled data from default LP with a 60-second budget. Because this budget differs from the 100-trial Optuna budget, we treat FLAML as illustrative, not head-to-head. 
+
+## 4.4 Metrics, Statistics, and Implementation 
+
+Our primary metric is g-measure [32 ], the harmonic mean of recall ( pd ) and specificity (1 − pf ). It is computed as g = 2 · pd · (100 − pf )/(pd + 100 − pf ) on a 0–100 scale. We use g-measure instead of accuracy because accuracy can be dominated by the majority class under imbalance. We also prefer it over F-measure, which is threshold-unstable, and AUC-ROC, which is threshold-independent. To separate threshold effects from ranking quality, we also report recall, FPR, F-measure, and AUC-ROC. Decision thresholds are tuned on Dval by grid search over [0 .05 , 0.95] (step 0.01) for every treatment. For 10% labels, pairwise comparisons are paired by seed ( n = 10 ) and use Wilcoxon signed-rank tests; we report Cliff’s δ.
+
+## 5 Evaluation Results 5.1 RQ1 (Effectiveness): Comparison Against Baselines 
+
+RQ1 asks whether SemiScope is consistently effective, not only whether it wins at a single operating point. We therefore evaluate effectiveness from three complementary views. First, Table 4 compares all treatments at the most label-scarce setting, i.e., 10% labels, using 10 seeds and including the equal-budget baselines. Second, Figure 2 traces performance across label rates from 90% to 10%, while the 10% point uses the same 10 seeds, and the remaining label rates use 3 seeds. Third, Table 5 reports paired per-dataset statistical tests at 10% labels. At the 10% label rate, RQ1 is answered clearly against the default baselines: SemiScope outperforms every default SSL treatment on all five datasets. Relative to the strongest default baseline, the improvement ranges from 0.7 g-measure points on NSL-KDD to 12.7 on CIC-IDS-2017. After Holm–Bonferroni correction, all five Wilcoxon tests remain significant (adjusted p ≤ .020 ), with Cliff’s δ ≥ 0.56 . These results establish SemiScope as a strong default-baseline competitor. Because Tuned-Clf uses the same search budget and remains close to SemiScope, these RQ1 results motivate the attribution analysis in RQ2. Rui Shu, Tianpei Xia and Jingzhu He XX:11 
+
+Table 4 G-measure comparison at 10% labels (mean ± std, 10 seeds). Bold : highest mean among semi-supervised treatments per dataset. Underline : strongest default baseline per dataset. 
+
+†Same 100-trial budget as SemiScope.                                                                                    
+
+> Treatment CIC-IDS-2017 Drebin NSL-KDD Phishing UNSW-NB15
+> Supervised RF (100%) 62.7 ±1.1 96.7 ±1.0 99.3 ±0.3 97.4 ±1.2 92.3 ±0.5 Supervised XGBoost (100%) 64.7 ±0.7 97.1 ±0.8 99.5 ±0.2 97.5 ±1.0 92.5 ±0.8 Supervised LightGBM (100%) 65.0 ±0.6 96.9 ±1.0 99.5 ±0.2 97.8 ±1.0 92.9 ±0.7 Tuned Sup. RF †(100%) 62.9 ±0.9 96.4 ±0.6 99.3 ±0.3 97.7 ±0.8 92.0 ±0.8 Tuned Sup. XGBoost †(100%) 64.2 ±1.3 96.9 ±0.9 99.3 ±0.2 97.0 ±2.0 92.8 ±0.5 Tuned Sup. LightGBM †(100%) 64.9 ±0.8 97.2 ±1.1 99.5 ±0.2 98.0 ±1.0 92.9 ±0.6 Default LP + RF 37.5 ±3.2 89.2 ±2.8 93.2 ±0.9 87.7 ±2.9 74.3 ±2.6 Default LS + RF 37.5 ±3.2 87.1 ±3.5 93.3 ±1.3 87.9 ±2.0 74.5 ±2.3 Default ST + RF 46.3 ±2.2 91.0 ±1.6 97.2 ±0.8 92.8 ±2.9 85.4 ±1.6 LP + SMOTE 41.7 ±3.5 89.2 ±2.8 93.4 ±1.0 89.5 ±2.5 77.5 ±2.0 LS + SMOTE 41.7 ±3.5 86.8 ±3.5 93.5 ±1.2 88.0 ±1.6 77.3 ±1.9 FLAML (AutoML) 18.0 ±11.1 88.0 ±3.9 87.6 ±3.9 66.6 ±11.2 74.5 ±8.4 Tuned-Clf: LP+HPO †59.1 ±1.2 93.0 ±1.8 97.9 ±0.8 95.5 ±1.1 90.6 ±0.9
+> Tuned-Clf: ST+HPO †58.3 ±0.7 93.0 ±1.9 97.7 ±0.8 95.5 ±1.8 90.3 ±0.8 SemiScope 59.0 ±1.2 93.3 ±1.5 98.0 ±0.7 96.1 ±1.2 90.6 ±0.6
+
+Figure 2 G-measure across label rates. We use 3 seeds at 20–90% and 10 seeds at 10%. Dashed line: supervised RF (100%). Shaded bands: ±1 std. 
+
+The aggregate comparison in Table 4 also shows why no single default baseline is sufficient. First, default LP behaves very differently across datasets at the 10% label rate: it drops to 37.5 on CIC-IDS-2017 ( −25.2 vs. supervised RF) and 74.3 on UNSW-NB15, but still reaches 93.2 on NSL-KDD. This spread means that conclusions based on one dataset or one default SSL method would be fragile. SemiScope reduces the largest LP gaps, improving over Default LP by 21.5 g-measure points on CIC-IDS-2017 and 16.3 on UNSW-NB15. Second, adding SMOTE to default graph-based SSL has mixed effects. LP + SMOTE improves over LP by 4.2 on CIC-IDS-2017 and 3.3 on UNSW-NB15, but its effect is near-zero on Drebin and NSL-KDD. This pattern is consistent with the risk described earlier: oversampling amplifies the distribution produced by SSL, so noisy pseudo-labels can limit or even reverse the benefit of synthetic samples. SemiScope addresses this interaction by letting the optimizer decide both whether and how aggressively to oversample. Third, Self-Training is the strongest default baseline. When paired with decision-threshold tuning, default ST achieves 46.3–97.2 g-measure. On NSL-KDD, it nearly matches SemiScope: 97.2 versus 98.0 in g-measure. On the harder datasets, however, SemiScope’s mean remains XX:12 SemiScope: Disentangling Classifier Tuning and Joint Optimization               
+
+> Table 5 Paired tests at 10% labels ( n= 10 seeds). ∆is mean paired difference in g-measure. Bracketed ranges are bootstrap 95% confidence intervals (CIs) computed with 5,000 resamples. Top panel: SemiScope vs. Default ST + RF (large-effect difference test). Bottom panel: SemiScope vs. equal-budget Tuned-Clf: LP+HPO (paired TOST [ 19 ] at the primary SESOI =±1.0). Holm– Bonferroni adjustment is applied across the five datasets. Equiv. :pTOST,adj <0.05 (Drebin .0499 ).
+
+Dataset ∆ mean (95% CI) Cliff’s δ (95% CI) pWilcox,adj pTOST,adj Equiv. 
+
+SemiScope vs. Default ST + RF (strongest default) 
+
+CIC-IDS-2017 +12.75 1.00 .010 — —
+
+Drebin +2.33 0.68 .018 — —
+
+NSL-KDD +0.74 0.56 .020 — —
+
+Phishing +3.30 0.78 .018 — —
+
+UNSW-NB15 +5.20 1.00 .010 — —
+
+SemiScope vs. Tuned-Clf: LP+HPO (equal-budget equivalence test, SESOI = ±1.0)
+
+CIC-IDS-2017 −0.07 [ −0.75, +0.53] 0.00 [ −0.52, +0.54] 1.000 .040 ✓
+
+Drebin +0.27 [ −0.36, +0.82] 0.10 [ −0.42, +0.62] 1.000 .0499 ✓
+
+NSL-KDD +0.10 [ −0.16, +0.39] 0.07 [ −0.45, +0.59] 1.000 <.001 ✓
+
+Phishing +0.64 [ +0.09, +1.26] 0.29 [ −0.26, +0.76] .420 .137 ✗
+
+UNSW-NB15 +0.02 [ −0.55, +0.50] 0.02 [ −0.52, +0.56] 1.000 .014 ✓                                                   
+
+> Table 6 Secondary metrics at 10% labels. Default ST + RF is the strongest default baseline. Mean over 10 seeds; better value in each pair bolded . Arrows indicate direction.
+> SemiScope Default ST + RF Dataset Rec. ↑FPR ↓AUC ↑F1 ↑Rec. ↑FPR ↓AUC ↑F1 ↑
+> CIC-IDS-2017 57.9 39.4 64.8 35.8 31.6 13.2 61.9 33.8 Drebin 90.9 4.1 98.1 85.7 87.4 5.1 96.4 81.7 NSL-KDD 96.9 0.9 99.7 96.5 95.6 1.0 98.8 95.5 Phishing 95.2 2.9 99.2 88.1 90.7 4.6 98.1 80.8 UNSW-NB15 91.0 9.7 97.1 79.3 77.7 5.1 92.8 78.4
+
+higher by +3.3 to +12.7. Finally, FLAML is unreliable at low label rates in this setup. It has high variance ( ±8–11 on three datasets) and collapses on Phishing (66.6 ±11.2). One plausible explanation is that FLAML optimizes the classifier while treating noisy pseudo-labels as ground truth. The descriptive gains above are supported by paired statistical tests. Table 5 (top panel) compares SemiScope against Default ST + RF, the strongest default baseline. The tests are paired by seed ( n = 10 ) and use Wilcoxon signed-rank tests plus Cliff’s δ. All five comparisons yield large effects ( δ ≥ 0.56 ) and remain significant after Holm–Bonferroni correction across datasets. The top panel therefore supports the RQ1 performance claim, and the bottom panel is included here for completeness and interpreted in RQ2. Because g-measure combines recall and specificity, we also check whether the gains reflect broader metric improvements. Table 6 reports recall, FPR, AUC-ROC, and F-measure for SemiScope and Default ST + RF at 10%. SemiScope achieves higher mean AUC-ROC, recall, and F-measure on all five datasets. The main tradeoff appears on CIC-IDS-2017, where SemiScope accepts a higher false-alarm rate in exchange for substantially higher recall (+26.3). UNSW-NB15 shows the same tradeoff more mildly: recall rises by 13.3 points, while FPR also increases. 
+
+Finding 1 (Effectiveness). Joint pipeline optimization exceeds every default baseline on all five datasets at 10% labels. Gains over the strongest default (Default ST + RF) range from +0.7 to +12.7 and remain significant after Holm–Bonferroni correction (Table 5). Rui Shu, Tianpei Xia and Jingzhu He XX:13                              
+
+> Table 7 Sensitivity of equivalence verdicts to the Smallest Effect Size of Interest (SESOI), in g-measure points, for SemiScope versus Tuned-Clf: LP+HPO. Verdicts use Holm-adjusted paired TOST across five datasets. ✓= equivalent, ✗= inconclusive.
+> SESOI CIC-IDS-2017 Drebin NSL-KDD Phishing UNSW-NB15 Total
+> ±0.5✗✗✗✗✗0/5
+> ±1.0✓✓✓✗✓4/5
+> ±1.5✓✓✓✓✓5/5
+
+## 5.2 RQ2 (Decomposition): Classifier HPO vs. Joint Search 
+
+RQ1 shows that SemiScope improves over default SSL baselines, but that comparison does not tell us which part of the pipeline creates the gain. RQ2 therefore asks whether the improvement requires joint SSL and classifier search, or whether it mostly comes from tuning the classifier on default SSL output. The two Tuned-Clf baselines in Table 4 provide this attribution control: they keep SSL at defaults and use the same 100 Optuna trials, classifier search space, and validation-tuned threshold as SemiScope. We use Tuned-Clf LP+HPO for the formal equivalence test in Table 5, and Tuned-Clf ST+HPO for the recovered-share calculation because Default ST + RF is the strongest default baseline. Standard difference tests would only ask whether a nonzero gap is detectable. RQ2 instead asks whether the remaining gap is small enough to ignore in practice. We therefore use equivalence testing with a primary Smallest Effect Size of Interest (SESOI) of ±1.0 g-measure. For context, this margin is on the order of the seed-to-seed variation in Table 4, where standard deviations are often around one point, and it is small on the 0–100 g-measure scale. We therefore treat a gap within ±1 point as practically negligible. We fix the test protocol before inspecting outcomes. For each dataset, the primary comparison is SemiScope versus Tuned-Clf: LP+HPO, evaluated with paired TOST [ 19 ]. We apply Holm–Bonferroni correction across the five datasets. Table 5 reports the paired mean difference ∆, bootstrap 95% confidence intervals (CIs) computed with 5,000 resamples, and Cliff’s δ as a descriptive effect size. The equivalence decision itself comes from the paired TOST on ∆.At the primary SESOI of ±1.0 g-measure, Tuned-Clf is statistically equivalent to Semi-Scope on four of the five datasets. CIC-IDS-2017, NSL-KDD, UNSW-NB15, and Drebin pass after Holm correction, with Drebin at the boundary. Their paired 95% CIs lie within the 
+
+[−1, +1] practical-equivalence band (Table 5, bottom panel). Phishing is the only inconclusive dataset. SemiScope is higher by +0 .64 g-measure, but the CI upper bound crosses +1 .0. We therefore do not claim either equivalence or a reliable practical advantage on Phishing at this sample size. Thus, under the primary margin, the full joint search does not show a practical advantage over classifier-only tuning on four datasets; the fifth remains unresolved. We also check whether this conclusion is sensitive to the practical margin. Table 7 reports equivalence verdicts at ±0.5, ±1.0, and ±1.5. At ±0.5, no dataset reaches equivalence with n= 10 , and at ±1.5, all five datasets do. The primary ±1.0 margin is therefore the smallest tested margin that separates datasets at this sample size, so we use it as the main interpretation rather than the more permissive ±1.5 margin. These equivalence results change the interpretation of the RQ1 gains: most of the +0 .7
+
+to +12 .7 improvement over defaults is not unique to the full joint search. To quantify how much of SemiScope’s default-baseline gain is recovered by classifier tuning, let G(M ) denote the mean g-measure of treatment M at 10% labels. We define recovered share as Recovered Share = G(Tuned-Clf: ST+HPO ) − G(Default ST + RF )
+
+G(SemiScope ) − G(Default ST + RF ) . (4) XX:14 SemiScope: Disentangling Classifier Tuning and Joint Optimization                                 
+
+> Table 8 Component ablation for RQ3 at 10% labels (g-measure, mean ±std over 10 seeds). Rows remove one component from full SemiScope.
+> Config CIC-IDS-2017 Drebin NSL-KDD Phishing UNSW-NB15
+> Full SemiScope 59.0 ±1.2 93.3 ±1.5 98.0 ±0.7 96.1 ±1.2 90.6 ±0.6
+> −Conf. filter 59.2 ±1.2 93.6 ±1.8 98.1 ±0.8 95.8 ±1.4 90.8 ±0.9
+> −SSL selection 58.8 ±2.3 93.4 ±1.6 98.0 ±0.7 95.8 ±0.8 90.7 ±0.7
+> −Clf. selection 58.4 ±1.9 93.8 ±1.5 98.0 ±0.7 95.8 ±1.3 89.9 ±0.8
+> Figure 3 Ablation deltas relative to full SemiScope at 10% labels (10 seeds). Negative values indicate lower g-measure after removing the component.
+
+Tuned-Clf: ST+HPO is the headline comparator for this ratio because it starts from the strongest default SSL family, and the LP+HPO variant is a robustness check. Using Tuned-Clf: ST+HPO, classifier HPO with the same budget recovers a median 86% of SemiScope’s gain over Default ST + RF, with per-dataset shares from 66% to 94%. Using Tuned-Clf: LP+HPO gives a similar median of 88%, and four of five datasets exceed 86%. The primary equivalence test also shows that the residual difference between classifier-only tuning and full joint search stays within the ±1.0 band on 4 out of 5 datasets. This shows why untuned defaults are not enough as controls, i.e., without a matched classifier-HPO baseline, gains can be attributed to SSL-side search even when classifier tuning explains most of them. 
+
+Finding 2 (Decomposition). Tuned-Clf LP+HPO is statistically equivalent to SemiScope on four of five datasets at SESOI = ±1.0; Phishing remains inconclusive. Tuned-Clf ST+HPO recovers a median 86% of SemiScope’s gain over Default ST + RF, so most of the default-baseline improvement should not be attributed to SSL-side search alone. 
+
+## 5.3 RQ3 (Composability): Ablation Study 
+
+RQ3 examines the same attribution question from inside the joint pipeline. If removing one component causes most of the degradation, then that component explains more of the pipeline’s value than broad interaction among all stages. We therefore report both mean g-measure changes and changes in standard deviation, since a component can affect robustness even when its mean contribution is small. Table 8 and Figure 3 summarize the 10% label-rate ablations. The ablation results point to three patterns. First, classifier selection contributes the most. Removing it produces the largest drops on CIC-IDS-2017 and UNSW-NB15, with a −0.24 Rui Shu, Tianpei Xia and Jingzhu He XX:15                       
+
+> Table 9 Label rate needed to reach within 1 g-measure point of Supervised RF (100% labels). Values are 3-seed directional estimates. ∆is SemiScope minus Default ST + RF in percentage points; negative values mean SemiScope needs fewer labels.
+> Dataset SemiScope Default ST + RF ∆(pp)
+> CIC-IDS-2017 30% 50% −20
+> Drebin 40% 50% −10
+> NSL-KDD 20% 20% 0Phishing 20% 20% 0UNSW-NB15 30% 60% −30
+
+average change across datasets. This is consistent with RQ2: a large part of the improvement comes from choosing and tuning the downstream classifier, especially on datasets where default SSL is weakest. Second, SSL method selection has little effect on the average score but can affect robustness across seeds. Fixing SSL to LP changes the mean by only −0.05 on average, while roughly doubling the per-seed standard deviation on CIC-IDS-2017. Thus, the main benefit of SSL method selection in this ablation is not a consistent mean gain, but reduced sensitivity to the particular labeled/unlabeled split. Third, confidence filtering has a small and dataset-dependent effect. Removing it slightly improves four datasets and lowers Phishing by 0.3 g-measure, giving a near-zero average effect ( +0.11 ∆ in Table 8). This behavior matches the tunable-filter design. When filtering does not help validation performance, the optimizer can set t ≈ 0.5, effectively turning it off; when stricter pseudo-label selection helps, it can raise t above 0.8. This argues against imposing a single fixed confidence cutoff across datasets. The near-neutral average effect in Table 8 and Figure 3 also suggests a limitation of raw SSL confidence scores. Because LP, LS, and Self-Training produce confidence scores on different scales, a single raw threshold on max c p(c|x) is not guaranteed to separate clean from noisy pseudo-labels across methods. This helps explain why filtering is not a consistently high-leverage component on these tabular datasets. Calibrating SSL confidence scores is therefore a concrete direction for future work. For the present study, the practical takeaway is narrower: start with default ST, then add classifier HPO and decision-threshold tuning before spending effort on a full joint SSL search. 
+
+Finding 3 (Composability). Classifier selection is the highest-leverage component ( −0.24 mean ∆ when removed). SSL method selection mainly affects variability, and confidence filtering is near-neutral on average ( +0.11 mean ∆). The ablation therefore supports prioritizing classifier choice before adding more SSL-side controls. 
+
+## 5.4 RQ4 (Label Efficiency): Exploratory Crossover Analysis 
+
+RQ4 shifts from fixed-label performance to label efficiency. We ask what label rate is needed before SemiScope approaches the fully supervised reference. We define the supervised crossover as the smallest label rate at which SemiScope approaches Supervised RF trained with 100% labels. Operationally, this means its mean g-measure, estimated with 3 seeds, is within 1 g-measure point of the supervised reference. The within-1 criterion avoids overinterpreting exact equality from the 3-seed estimates. Table 9 applies the same rule to SemiScope and Default ST + RF, so the difference estimates the label-rate advantage of the optimized pipeline. In Table 9, SemiScope crosses at the same or a lower label rate than Default ST + RF on every dataset. The largest label-rate advantages occur on CIC-IDS-2017 and UNSW-NB15, XX:16 SemiScope: Disentangling Classifier Tuning and Joint Optimization                           
+
+> Table 10 Optimization cost and label-efficiency summary. Runtime is per SemiScope configuration with 100 Optuna trials and 4 workers. Crossover is the SemiScope label rate from Table 9. Labels saved is measured relative to a fully labeled training set. Gain@10% is SemiScope minus Default ST + RF at the 10% label rate.
+> Dataset Runtime Crossover Labels saved Gain@10%
+> CIC-IDS-2017 28 min 30% 70% +12.7 Drebin 13 min 40% 60% +2.3 NSL-KDD 15 min 20% 80% +0.7 Phishing 20 min 20% 80% +3.3 UNSW-NB15 25 min 30% 70% +5.2
+> Figure 4 Optimizer selections by dataset across all 170 SemiScope runs. Darker cells are more frequent.
+
+the same datasets where SemiScope has the largest 10% label-rate gains over Default ST + RF. On NSL-KDD and Phishing, Default ST + RF already reaches within 1 point of the supervised reference at 20% labels, and SemiScope does not reduce the observed crossover rate. On Drebin, the gap is smaller (10 pp). Because the 20–90% label-rate curves use 3 seeds, these crossovers should be interpreted as directional evidence rather than definitive thresholds. The pattern follows the strength of the default baseline: when defaults drop sharply, as on CIC-IDS-2017 and UNSW-NB15, the optimized pipeline reaches the supervised reference at a lower label rate; when defaults are already near the supervised ceiling, there is little room to move the crossover earlier. Our design concentrates statistical power on the 10% RQ2 comparison, leaving 3 seeds at the higher label rates. More seeds at each label rate would be needed to estimate the crossover points precisely. 
+
+Finding 4 (Label Efficiency). SemiScope reaches within 1 g-measure of Supervised RF at 20–30% labels on four datasets and at 40% labels on Drebin. It crosses at the same or a lower label rate than Default ST + RF on every dataset, with the largest advantages on CIC-IDS-2017 ( −20 pp) and UNSW-NB15 ( −30 pp). 
+
+## 5.5 RQ5 (Cost and Practical Justification) 
+
+RQ5 asks whether the additional optimization cost is reasonable in an offline model-construction setting. The tradeoff is runtime measured against two possible benefits. One is better performance when only 10% of labels are available. The other is a lower label rate for approaching the fully supervised reference. Table 10 summarizes these quantities using the 10% gain over Default ST + RF and the crossover estimates from RQ4. The table should be read using both benefit signals. CIC-IDS-2017 and UNSW-NB15 provide the clearest justification because they have large gains at the 10% label rate and Rui Shu, Tianpei Xia and Jingzhu He XX:17 
+
+also reach the supervised reference at lower label rates than Default ST + RF. Phishing has a meaningful 10% gain, but its crossover rate matches Default ST + RF, so its benefit is better low-label performance rather than an earlier crossover. NSL-KDD has the weakest case because its 10% gain is only 0.7 g-measure, even though the estimated crossover is low. Drebin is intermediate, with a modest 10% gain and a later crossover than the strongest cases. The search logs give two additional signals (Figure 4). First, classifier choice is concen-trated. LightGBM is selected in 62% of all SemiScope runs and is the most frequent classifier on four of the five datasets. SSL choice is more dispersed. Label Spreading is most frequent or tied on CIC-IDS-2017, Drebin, and NSL-KDD, while Self-Training is most frequent on Phishing and UNSW-NB15. Second, threshold tuning is not a small adjustment. Across the same 170 SemiScope runs, the mean tuned threshold is 0.20, and 99% of thresholds fall below the default 0.5. Because the minority-class prevalence is only 12–20%, a fixed τ = 0.5
+
+cutoff can bias predictions toward the majority class and reduce minority recall. This is why all comparisons treat validation-set threshold tuning as part of the estimator rather than as a reporting detail. 
+
+Finding 5 (Cost). Optimization cost is 13–28 min per configuration. The cost is clearest to justify on CIC-IDS-2017 and UNSW-NB15, where SemiScope has both large 10% gains and earlier directional crossovers. On Phishing the value is better low-label performance, while on NSL-KDD and Drebin the case for full joint search is weaker. 
+
+## 6 Threats to Validity 
+
+Internal Validity. Bayesian optimization is stochastic, so we use ten seeds for the main comparison at 10% labels and three seeds for the curves at 20–90% labels. This design gives the paired TOST enough power for the primary SESOI = ±1.0 on four datasets, but not for the narrower SESOI ±0.5, so we do not claim equivalence at that margin. Independent seeds with distinct train/validation/test splits mitigate overfitting to the validation split, and the shared validation protocol should affect optimized treatments similarly. A different hyperparameter range could shift absolute scores, but the Tuned-Clf and SemiScope comparison should remain fair because both use the same classifier space. 
+
+External Validity. Findings are specific to binary tabular security classification with classical SSL and classifiers based on decision trees. The evaluation covers five benchmarks that do not include deep neural classifiers, multiclass tasks, data outside tabular form. The claims should therefore be read as claims under fixed data splits and this protocol, not as deployment suggestions. Within this scope, Phishing’s residual advantage needs more seeds to confirm, and the curves over label rates are directional because they use only three seeds. 
+
+Construct Validity. SSL components are implemented with scikit-learn [ 28 ], Bayesian optimization uses Optuna [ 3], and SMOTE with a target ratio follows SMOTUNED [ 2]. Different implementations could shift absolute numbers. Our primary conclusion is tied to g-measure [ 32 ], while alternate objectives such as F-measure could favor different tradeoffs between precision and recall. We therefore do not claim equivalence across objectives. 
+
+## 7 Conclusion 
+
+In this paper, we studied semi-supervised learning for binary tabular security tasks as a configurable pipeline rather than as a single SSL algorithm. We used SemiScope as XX:18 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+a controlled joint-search framework and compared it with default baselines, supervised references, ablations, and equal-budget tuning controls across five security datasets. The main finding is that joint optimization can improve SSL performance, especially when labels are scarce, but the source of that improvement is not always the SSL component itself. Much of the gain comes from downstream model tuning and threshold tuning. This means that reported gains from joint SSL pipelines should be interpreted through matched controls, not only through comparisons with untuned defaults. For practitioners, we would recommend to start with a clear baseline, tune the decision threshold, and optimize the downstream classifier before investing in full joint search. Full joint optimization should be considered when labels are expensive or default SSL leaves a performance gap. 
+
+## Data Availability 
+
+Data Availability: The dataset supporting this study, including the mining scripts, raw repository data, and analysis notebooks, is openly available on Zenodo at https://doi.org/ 10.5281/zenodo.21081753 under a CC-BY 4.0 license. The replication package contains all materials necessary to reproduce our findings. 
+
+References 
+
+1 Maher Aburrous, M Alamgir Hossain, Fadi Thabatah, and Keshav Dahal. Intelligent phishing website detection system using fuzzy techniques. In 2008 3rd international conference on information and communication technologies: from theory to applications , pages 1–6. IEEE, 2008. 
+
+2 Amritanshu Agrawal and Tim Menzies. Is" better data" better than" better data miners"? on the benefits of tuning smote for defect prediction. In Proceedings of the 40th International Conference on Software engineering , pages 1050–1061, 2018. 
+
+3 Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama. Optuna: A next-generation hyperparameter optimization framework. In Proceedings of the 25th ACM SIGKDD international conference on knowledge discovery & data mining , pages 2623–2631, 2019. 
+
+4 Ibrahim Alabdulmohsin, YuFei Han, Yun Shen, and Xiangliang Zhang. Content-agnostic malware detection in heterogeneous malicious distribution graph. In Proceedings of the 25th ACM International on Conference on Information and Knowledge Management , pages 2395–2400, 2016. 
+
+5 Daniel Arp, Erwin Quiring, Feargus Pendlebury, Alexander Warnecke, Fabio Pierazzi, Christian Wressnegger, Lorenzo Cavallaro, and Konrad Rieck. Dos and don’ts of machine learning in computer security. In 31st USENIX Security Symposium (USENIX Security 22) , pages 3971–3988, 2022. 
+
+6 Daniel Arp, Michael Spreitzenbarth, Malte Hubner, Hugo Gascon, Konrad Rieck, and CERT Siemens. Drebin: Effective and explainable detection of android malware in your pocket. In 
+
+Ndss , volume 14, pages 23–26. San Diego, CA, 2014. 
+
+7 Dara Bahri, Heinrich Jiang, Yi Tay, and Donald Metzler. Scarf: Self-supervised contrastive learning using random feature corruption. arXiv preprint arXiv:2106.15147 , 2021. 
+
+8 James Bergstra, Rémi Bardenet, Yoshua Bengio, and Balázs Kégl. Algorithms for hyper-parameter optimization. Advances in neural information processing systems , 24, 2011. 
+
+9 Leo Breiman. Random forests. Machine learning , 45(1):5–32, 2001. 
+
+10 Nitesh V Chawla, Kevin W Bowyer, Lawrence O Hall, and W Philip Kegelmeyer. Smote: synthetic minority over-sampling technique. Journal of artificial intelligence research , 16:321– 357, 2002. Rui Shu, Tianpei Xia and Jingzhu He XX:19 
+
+11 Tianqi Chen and Carlos Guestrin. Xgboost: A scalable tree boosting system. In Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining , pages 785–794, 2016. 
+
+12 Matthias Feurer, Aaron Klein, Katharina Eggensperger, Jost Springenberg, Manuel Blum, and Frank Hutter. Efficient and robust automated machine learning. Advances in neural information processing systems , 28, 2015. 
+
+13 Hui Han, Wen-Yuan Wang, and Bing-Huan Mao. Borderline-smote: a new over-sampling method in imbalanced data sets learning. In International conference on intelligent computing ,pages 878–887. Springer, 2005. 
+
+14 Noah Hollmann, Samuel Müller, Katharina Eggensperger, and Frank Hutter. Tabpfn: Atransformer that solves small tabular classification problems in a second. arXiv preprint arXiv:2207.01848 , 2022. 
+
+15 Ahmet Iscen, Giorgos Tolias, Yannis Avrithis, and Ondrej Chum. Label propagation for deep semi-supervised learning. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , pages 5070–5079, 2019. 
+
+16 Pooyan Jamshidi, Norbert Siegmund, Miguel Velez, Christian Kästner, Akshay Patel, and Yuvraj Agarwal. Transfer learning for performance modeling of configurable systems: An exploratory analysis. In 2017 32nd IEEE/ACM International Conference on Automated Software Engineering (ASE) , pages 497–508. IEEE, 2017. 
+
+17 Guolin Ke, Qi Meng, Thomas Finley, Taifeng Wang, Wei Chen, Weidong Ma, Qiwei Ye, and Tie-Yan Liu. Lightgbm: A highly efficient gradient boosting decision tree. Advances in neural information processing systems , 30, 2017. 
+
+18 Bojan Kolosnjaji, Apostolis Zarras, Tamas Lengyel, George Webster, and Claudia Eckert. Adaptive semantics-aware malware classification. In International Conference on Detection of Intrusions and Malware, and Vulnerability Assessment , pages 419–439. Springer, 2016. 
+
+19 Daniël Lakens. Equivalence tests: A practical primer for t tests, correlations, and meta-analyses. 
+
+Social psychological and personality science , 8(4):355–362, 2017. 
+
+20 Duc C Le and A Nur Zincir-Heywood. Machine learning based insider threat modelling and detection. In 2019 IFIP/IEEE Symposium on Integrated Network and Service Management (IM) , pages 1–6. IEEE, 2019. 
+
+21 Dong-Hyun Lee et al. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks. In Workshop on challenges in representation learning, ICML ,volume 3, page 896. Atlanta, 2013. 
+
+22 Mohammad Saiful Islam Mamun, Mohammad Ahmad Rathore, Arash Habibi Lashkari, Natalia Stakhanova, and Ali A Ghorbani. Detecting malicious urls using lexical analysis. In 
+
+International conference on network and system security , pages 467–482. Springer, 2016. 
+
+23 Nour Moustafa and Jill Slay. Unsw-nb15: a comprehensive data set for network intrusion detection systems (unsw-nb15 network data set). In 2015 military communications and information systems conference (MilCIS) , pages 1–6. Ieee, 2015. 
+
+24 Paul Kiyambu Mvula, Paula Branco, Guy-Vincent Jourdan, and Herna Lydia Viktor. A survey on the applications of semi-supervised learning to cyber-security. ACM Computing Surveys ,56(10):1–41, 2024. 
+
+25 Vivek Nair, Zhe Yu, Tim Menzies, Norbert Siegmund, and Sven Apel. Finding faster configur-ations using flash. IEEE Transactions on Software Engineering , 46(7):794–811, 2018. 
+
+26 Randal S Olson and Jason H Moore. Tpot: A tree-based pipeline optimization tool for automating machine learning. In Workshop on automatic machine learning , pages 66–74. PMLR, 2016. 
+
+27 Sai C Pallaprolu, Josephine M Namayanja, Vandana P Janeja, and CT Sai Adithya. Label propagation in big data to detect remote access trojans. In 2016 IEEE International Conference on Big Data (Big Data) , pages 3539–3547. IEEE, 2016. XX:20 SemiScope: Disentangling Classifier Tuning and Joint Optimization 
+
+28 Fabian Pedregosa, Gaël Varoquaux, Alexandre Gramfort, Vincent Michel, Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron Weiss, Vincent Dubourg, et al. Scikit-learn: Machine learning in python. the Journal of machine Learning research , 12:2825–2830, 2011. 
+
+29 Paulo Angelo Alves Resende and André Costa Drummond. A survey of random forest based methods for intrusion detection systems. ACM Computing Surveys (CSUR) , 51(3):1–36, 2018. 
+
+30 Henry Scudder. Probability of error of some adaptive pattern-recognition machines. IEEE Transactions on Information Theory , 11(3):363–371, 1965. 
+
+31 Iman Sharafaldin, Arash Habibi Lashkari, Ali A Ghorbani, et al. Toward generating a new intrusion detection dataset and intrusion traffic characterization. ICISSp , 1(2018):108–116, 2018. 
+
+32 Rui Shu, Tianpei Xia, Huy Tu, Laurie Williams, and Tim Menzies. Reducing the cost of training security classifier (via optimized semi-supervised learning). arXiv preprint arXiv:2205.00665 ,2022. 
+
+33 Jasper Snoek, Hugo Larochelle, and Ryan P Adams. Practical bayesian optimization of machine learning algorithms. Advances in neural information processing systems , 25, 2012. 
+
+34 Kihyuk Sohn, David Berthelot, Nicholas Carlini, Zizhao Zhang, Han Zhang, Colin A Raffel, Ekin Dogus Cubuk, Alexey Kurakin, and Chun-Liang Li. Fixmatch: Simplifying semi-supervised learning with consistency and confidence. Advances in neural information processing systems , 33:596–608, 2020. 
+
+35 Alireza Souri and Rahil Hosseini. A state-of-the-art survey of malware detection approaches using data mining techniques. Human-centric Computing and Information Sciences , 8(1):1–22, 2018. 
+
+36 Mahbod Tavallaee, Ebrahim Bagheri, Wei Lu, and Ali A Ghorbani. A detailed analysis of the kdd cup 99 data set. In 2009 IEEE symposium on computational intelligence for security and defense applications , pages 1–6. Ieee, 2009. 
+
+37 Huy Tu, Zhe Yu, and Tim Menzies. Better data labelling with emblem (and how that impacts defect prediction). IEEE Transactions on Software Engineering , 48(1):278–294, 2020. 
+
+38 Talip Ucar, Ehsan Hajiramezanali, and Lindsay Edwards. Subtab: Subsetting features of tabular data for self-supervised representation learning. Advances in Neural Information Processing Systems , 34:18853–18865, 2021. 
+
+39 Jesper E Van Engelen and Holger H Hoos. A survey on semi-supervised learning. Machine learning , 109(2):373–440, 2020. 
+
+40 Chi Wang, Qingyun Wu, Markus Weimer, and Erkang Zhu. Flaml: A fast and lightweight automl library. Proceedings of machine learning and systems , 3:434–447, 2021. 
+
+41 Haobo Wang, Zhao Li, Jiaming Huang, Pengrui Hui, Weiwei Liu, Tianlei Hu, and Gang Chen. Collaboration based multi-label propagation for fraud detection. In Proceedings of the Twenty-Ninth International Conference on International Joint Conferences on Artificial Intelligence , pages 2477–2483, 2021. 
+
+42 Yidong Wang, Hao Chen, Qiang Heng, Wenxin Hou, Yue Fan, Zhen Wu, Jindong Wang, Marios Savvides, Takahiro Shinozaki, Bhiksha Raj, et al. Freematch: Self-adaptive thresholding for semi-supervised learning. arXiv preprint arXiv:2205.07246 , 2022. 
+
+43 Jinsung Yoon, Yao Zhang, James Jordon, and Mihaela Van der Schaar. Vime: Extending the success of self-and semi-supervised learning to tabular domain. Advances in neural information processing systems , 33:11033–11043, 2020. 
+
+44 Dengyong Zhou, Olivier Bousquet, Thomas Lal, Jason Weston, and Bernhard Schölkopf. Learning with local and global consistency. Advances in neural information processing systems ,16, 2003. 
+
+45 Xiaojin Zhu and Andrew Goldberg. Introduction to semi-supervised learning . Morgan & Claypool Publishers, 2009. 
+
+46 Xiaojin Jerry Zhu. Semi-supervised learning literature survey. 2005.

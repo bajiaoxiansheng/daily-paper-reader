@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-05 <!--dpr-date:20260705-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/05/2607.00113v1-semiscope-disentangling-classifier-tuning-and-joint-optimization-in-semi-supervised-security-classification" data-sidebar-item="{&quot;title&quot;: &quot;SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.00113v1-semiscope-disentangling-classifier-tuning-and-joint-optimization-in-semi-supervised-security-classification&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;半监督学习方法可应用于加密流量分类&quot;}">SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification</a>
   * 2026-07-02 <!--dpr-date:20260702-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/02/2606.29797v1-multi-level-distributional-entropy-for-explainable-network-intrusion-detection" data-sidebar-item="{&quot;title&quot;: &quot;Multi-Level Distributional Entropy for Explainable Network Intrusion Detection&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.29797v1-multi-level-distributional-entropy-for-explainable-network-intrusion-detection&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;提出从流级统计信息中提取多级分布熵特征用于网络入侵检测，直接适用于加密流量检测中的网络流特征提取&quot;}">Multi-Level Distributional Entropy for Explainable Network Intrusion Detection</a>

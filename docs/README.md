@@ -6,22 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-04
-- 运行时间：2026-07-04 21:06:12 UTC
+- 最新运行日期：2026-07-05
+- 运行时间：2026-07-05 20:01:52 UTC
 - 运行状态：成功
-- 本次总论文数：0
+- 本次总论文数：1
 - 精读区：0
-- 速读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-> 今日无新推荐，系统未产出可展示论文。
-- 详情：[/202607/04/README](/202607/04/README)
+今日聚焦半监督安全分类中分类器调优与联合优化的解耦研究。
+核心价值：SemiScope框架通过分离调优与优化步骤，提升安全场景下半监督模型的分类性能。
+建议在部署安全分类模型时，尝试将分类器调整与整体优化过程解耦，可能更易取得稳定效果。
+- 详情：[/202607/05/README](/202607/05/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification](/202607/05/2607.00113v1-semiscope-disentangling-classifier-tuning-and-joint-optimization-in-semi-supervised-security-classification)  
+   标签：评分：6.0/10、query:crypto-class
+   evidence：半监督学习方法可应用于加密流量分类
 
 
 <div class="dpr-home-promo-card">
