@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-07 <!--dpr-date:20260707-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/07/2607.03149v1-a-binary-and-system-integrated-analysis-approach-for-securing-the-quic-protocol" data-sidebar-item="{&quot;title&quot;: &quot;A Binary and System Integrated Analysis Approach for Securing the QUIC Protocol&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.03149v1-a-binary-and-system-integrated-analysis-approach-for-securing-the-quic-protocol&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;加密QUIC流量分析&quot;}">A Binary and System Integrated Analysis Approach for Securing the QUIC Protocol</a>
   * 2026-07-05 <!--dpr-date:20260705-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/05/2607.00113v1-semiscope-disentangling-classifier-tuning-and-joint-optimization-in-semi-supervised-security-classification" data-sidebar-item="{&quot;title&quot;: &quot;SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.00113v1-semiscope-disentangling-classifier-tuning-and-joint-optimization-in-semi-supervised-security-classification&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;crypto-class&quot;}], &quot;evidence&quot;: &quot;半监督学习方法可应用于加密流量分类&quot;}">SemiScope: Disentangling Classifier Tuning and Joint Optimization in Semi-Supervised Security Classification</a>

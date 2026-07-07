@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-07T21:38:06.885584+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.03149v1",
+      "source": "arxiv",
+      "title": "A Binary and System Integrated Analysis Approach for Securing the QUIC Protocol",
+      "abstract": "The Quick UDP Internet Connections (QUIC) protocol is increasingly used to provide secure transport for Internet of Things (IoT) firmware and applications. Existing security analyses of QUIC focus on the captured network traffic, while binary-level analyses of QUIC implementations remain unexplored, leaving open the question of whether a defence specified by the QUIC standard is both present in the compiled binary and active when the server is under attack. This paper evaluates the Binary and System Integrated Security Analysis (BSISA) approach, in which a binary-level analysis of the compiled QUIC server is combined with a system-level analysis of the captured network traffic, on four production QUIC server implementations under six attack scenarios. Across 24 cells, the combined classifier configuration is the only configuration that correctly classifies at least one cell on every attack scenario, achieving 45.8% overall accuracy compared with 37.5% for the binary-level configuration and 25.0% for the system-level configuration. BSISA also identifies the specific defence function in the compiled binary that absorbed each attack, and flags declared-but-silent defences, routines that are present in the compiled binary (Retry-token validation in three of four stacks, anti-amplification in quiche) but never execute during attack, a class of finding that network capture alone cannot produce. In terms of efficiency, picoquic loses legitimate-client availability under slowloris and connection- ID exhaustion with failure rates of 72.4% and 73.3% respectively, while the other three implementations hold the failure rate at or below 0.5%. We hope these insights will be informative for QUIC security evaluations in IoT firmware deployments.",
+      "authors": [
+        "Maitha Alshaali",
+        "Wanqing Tu",
+        "Gaofei Huang",
+        "Mthandazo Ndhlovu"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.CR"
+      ],
+      "published": "2026-07-03T09:38:35+00:00",
+      "link": "https://arxiv.org/pdf/2607.03149v1",
+      "tags": [
+        "keyword:crypto-class",
+        "query:crypto-class"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "analysis of encrypted QUIC traffic",
+      "llm_evidence_cn": "加密QUIC流量分析",
+      "llm_evidence": "加密QUIC流量分析",
+      "canonical_evidence": "加密QUIC流量分析",
+      "llm_tldr_en": "Proposes BSISA, combining binary-level and system-level analysis of QUIC implementations using captured network traffic, directly addressing encrypted traffic analysis for security.",
+      "llm_tldr_cn": "现有QUIC安全分析多聚焦于网络流量，忽略了二进制实现层面的防御缺失。本文提出BSISA方法，将编译后QUIC服务器的二进制分析与捕获的QUIC网络流量系统分析相结合，评估四款生产级QUIC实现六种攻击场景下的防御活性。实验表明该方法能有效发现标准规定的防御是否在代码中启用。该成果为加密协议流量分析与安全验证提供了新思路。",
+      "llm_tldr": "现有QUIC安全分析多聚焦于网络流量，忽略了二进制实现层面的防御缺失。本文提出BSISA方法，将编译后QUIC服务器的二进制分析与捕获的QUIC网络流量系统分析相结合，评估四款生产级QUIC实现六种攻击场景下的防御活性。实验表明该方法能有效发现标准规定的防御是否在代码中启用。该成果为加密协议流量分析与安全验证提供了新思路。",
+      "llm_tags": [
+        "query:crypto-class"
+      ],
+      "matched_query_tag": "query:crypto-class",
+      "matched_query_text": "methods for classifying encrypted network traffic",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
